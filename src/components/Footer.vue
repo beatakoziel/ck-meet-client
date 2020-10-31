@@ -7,7 +7,7 @@
 <style scoped>
 .footer-text {
   font-size: 80%;
-  color: grey;
-  background-color: whitesmoke;
+  color: #faf7f1;
+  background-color: #2b3132;
 }
 </style>

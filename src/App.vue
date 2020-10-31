@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-main>
-      <NavBar />
-      <Peoples />
+    <NavBar />
+    <v-main class="mt-16">
+      <People />
     </v-main>
     <Footer />
   </v-app>
@@ -10,7 +10,7 @@
 
 <script>
 import NavBar from "./components/NavBar";
-import Peoples from "./components/Peoples";
+import People from "./components/People";
 import Footer from "./components/Footer";
 
 export default {
@@ -18,7 +18,7 @@ export default {
 
   components: {
     NavBar,
-    Peoples,
+    People,
     Footer
   },
 
@@ -27,3 +27,4 @@ export default {
   })
 };
 </script>
+

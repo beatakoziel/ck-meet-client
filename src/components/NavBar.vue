@@ -1,30 +1,19 @@
 <template>
-  <v-app-bar
-    absolute
-    color="#6A76AB"
-    dark
-    shrink-on-scroll
-    prominent
-    src="../assets/navbar-pic2.jpg"
-    fade-img-on-scroll
-    scroll-target="#scrolling-techniques-3"
-  >
+  <v-app-bar app absolute color="grey" dark prominent src="../assets/navbar-pic2.jpg">
     <template v-slot:img="{ props }">
-      <v-img v-bind="props"></v-img>
+      <v-img v-bind="props" class="image"></v-img>
     </template>
 
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
-    <v-toolbar-title>CKmeet</v-toolbar-title>
+    <v-toolbar-title class="display-3">CKmeet</v-toolbar-title>
 
     <v-spacer></v-spacer>
-
+    <v-switch v-model="$vuetify.theme.dark" inset persistent-hint class="mt-3"></v-switch>
     <v-btn icon>
-      <v-icon>mdi-account</v-icon>
+      <v-icon large>mdi-account</v-icon>
     </v-btn>
 
     <v-btn icon>
-      <v-icon>mdi-dots-vertical</v-icon>
+      <v-icon large>mdi-dots-vertical</v-icon>
     </v-btn>
 
     <template v-slot:extension>
@@ -36,3 +25,9 @@
     </template>
   </v-app-bar>
 </template>
+
+<style scoped>
+.image {
+  filter: brightness(75%);
+}
+</style>
