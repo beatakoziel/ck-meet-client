@@ -1,18 +1,17 @@
 <template>
-  <v-container>
+  <v-layout row ml-5>
     <p class="display-1">Poznawaj osoby z Twojego miasta i okolicy.</p>
     <p class="body-1">Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!</p>
-    <v-flex row justify-start wrap>
-      <PersonCard />
-      <PersonCard />
-      <PersonCard />
+    <v-flex row justify-start>
+      <PersonCard v-for="user in people" :key="user.id" :userData="user" />
+      <PersonCard v-for="user in people" :key="user.id" :userData="user" />
     </v-flex>
-  </v-container>
+  </v-layout>
 </template>
 
 <script>
 import PersonCard from "./PersonCard";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
 
@@ -20,14 +19,19 @@ export default {
     PersonCard
   },
 
-  data: () => ({
-    //
-  }),
+  data: () => ({}),
   methods: {
     ...mapActions(["getPeople"])
   },
-  mounted() {
+  computed: {
+    ...mapState({
+      people: state => state.people.people
+    })
+  },
+  created() {
     this.getPeople();
+    console.log("ZMIANY");
+    console.log(this.people);
   }
 };
 </script>

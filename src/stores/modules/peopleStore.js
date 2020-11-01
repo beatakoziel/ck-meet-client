@@ -3,11 +3,13 @@ const UserRepository = Repository.get("users");
 
 // initial state
 const state = () => ({
-    all: []
+    people: []
 })
 
 // getters
-const getters = {}
+const getters = {
+    
+}
 
 // actions
 const actions = {
@@ -21,8 +23,8 @@ const actions = {
 // mutations
 const mutations = {
     setPeople(state, people) {
-        state.all = people
-        console.log(state.all);
+        state.people = people
+        console.log(state.people);
     }
 }
 

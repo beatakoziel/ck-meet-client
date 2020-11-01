@@ -28,6 +28,6 @@
 
 <style scoped>
 .image {
-  filter: brightness(75%);
+  filter: brightness(90%);
 }
 </style>
