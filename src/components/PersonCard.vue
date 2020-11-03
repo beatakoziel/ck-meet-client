@@ -11,7 +11,8 @@
     <v-card-text>{{userData.description}}</v-card-text>
 
     <v-card-actions>
-      <v-btn color="accent" text>Pokaż profil</v-btn>
+        <router-link to="users/profile">      <v-btn color="accent" text>Pokaż profil </v-btn></router-link>
+     
     </v-card-actions>
   </v-card>
 </template>

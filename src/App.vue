@@ -2,7 +2,7 @@
   <v-app>
     <NavBar />
     <v-main class="mt-16">
-      <People />
+      <router-view></router-view>
     </v-main>
     <Footer />
   </v-app>
@@ -10,7 +10,6 @@
 
 <script>
 import NavBar from "./components/NavBar";
-import People from "./components/People";
 import Footer from "./components/Footer";
 
 export default {
@@ -18,7 +17,6 @@ export default {
 
   components: {
     NavBar,
-    People,
     Footer
   },
 

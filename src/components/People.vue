@@ -1,12 +1,18 @@
 <template>
-  <v-layout row ml-5>
-    <p class="display-1">Poznawaj osoby z Twojego miasta i okolicy.</p>
-    <p class="body-1">Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!</p>
-    <v-flex row justify-start>
+  <div>
+    <v-container>
+      <v-flex row justify-center ml-0>
+        <div class="display-1">Poznawaj osoby z Twojego miasta i okolicy.</div>
+      </v-flex>
+      <v-flex row justify-center ml-0>
+        <p class="body-1">Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!</p>
+      </v-flex>
+    </v-container>
+    <v-flex row justify-center ml-0>
       <PersonCard v-for="user in people" :key="user.id" :userData="user" />
       <PersonCard v-for="user in people" :key="user.id" :userData="user" />
     </v-flex>
-  </v-layout>
+  </div>
 </template>
 
 <script>
