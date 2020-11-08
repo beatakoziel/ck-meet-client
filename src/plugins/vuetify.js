@@ -5,7 +5,7 @@ Vue.use(Vuetify)
 
 const vuetify = new Vuetify({
     theme: {
-        dark: true,
+        dark: false,
         themes: {
             light: {
                 primary: "#FAF7F1",

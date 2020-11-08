@@ -1,7 +1,7 @@
 import People from "../components/People"
 import UserProfile from "../components/UserProfile"
 
-export const routes = [
+export const peopleRoutes = [
     {
         path: "/users",
         component: People
