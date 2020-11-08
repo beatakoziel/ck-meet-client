@@ -7,7 +7,8 @@ export const routes = [
         component: People
     },
     {
-        path: "/users/profile",
+        path: '/users/profile/:id',
+        name: 'Profile',
         component: UserProfile
     },
     {

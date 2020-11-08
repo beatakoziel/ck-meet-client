@@ -10,7 +10,6 @@
     </v-container>
     <v-flex row justify-center ml-0>
       <PersonCard v-for="user in people" :key="user.id" :userData="user" />
-      <PersonCard v-for="user in people" :key="user.id" :userData="user" />
     </v-flex>
   </div>
 </template>
@@ -20,7 +19,6 @@ import PersonCard from "./PersonCard";
 import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
-
   components: {
     PersonCard
   },
@@ -31,13 +29,11 @@ export default {
   },
   computed: {
     ...mapState({
-      people: state => state.people.people
+      people: state => state.peopleStore.people
     })
   },
   created() {
     this.getPeople();
-    console.log("ZMIANY");
-    console.log(this.people);
   }
 };
 </script>

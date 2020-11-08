@@ -3,12 +3,15 @@ const UserRepository = Repository.get("users");
 
 // initial state
 const state = () => ({
-    people: []
+    people: [],
+    currentUser: {
+        object: "hello"
+    }
 })
 
 // getters
 const getters = {
-    
+
 }
 
 // actions
@@ -24,7 +27,11 @@ const actions = {
 const mutations = {
     setPeople(state, people) {
         state.people = people
-        console.log(state.people);
+    },
+    setCurrentUser(state, user) {
+        console.log("USTAWIAM USERA W STORZE");
+        state.currentUser = user;
+        console.log(state.currentUser);
     }
 }
 
