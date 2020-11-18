@@ -1,4 +1,4 @@
-import Client from '../repositories/axiosClient';
+import Client from './axiosClient';
 const resource = '/users';
 
 export default {

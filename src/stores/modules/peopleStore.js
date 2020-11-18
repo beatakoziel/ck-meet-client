@@ -4,9 +4,7 @@ const UserRepository = Repository.get("users");
 // initial state
 const state = () => ({
     people: [],
-    currentUser: {
-        object: "hello"
-    }
+    currentUser: null
 })
 
 // getters
@@ -29,9 +27,7 @@ const mutations = {
         state.people = people
     },
     setCurrentUser(state, user) {
-        console.log("USTAWIAM USERA W STORZE");
         state.currentUser = user;
-        console.log(state.currentUser);
     }
 }
 

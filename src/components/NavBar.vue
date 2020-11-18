@@ -20,7 +20,6 @@
       <v-tabs align-with-title>
         <v-tab>Ludzie</v-tab>
         <v-tab>Spotkania</v-tab>
-        <v-tab>Wydarzenia</v-tab>
       </v-tabs>
     </template>
   </v-app-bar>

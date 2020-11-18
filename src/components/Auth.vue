@@ -8,6 +8,9 @@
       <p class="my-2">
         <RegisterDialog />
       </p>
+      <div class="footer">
+        <Footer />
+      </div>
     </div>
   </div>
 </template>
@@ -15,17 +18,18 @@
 <script>
 import RegisterDialog from "./RegisterDialog";
 import LoginDialog from "./LoginDialog";
+import Footer from "./Footer";
 export default {
   name: "App",
   components: {
     RegisterDialog,
-    LoginDialog
+    LoginDialog,
+    Footer,
   },
 
   data: () => ({}),
-  methods: {},
   computed: {},
-  created() {}
+  created() {},
 };
 </script>
 
@@ -50,5 +54,11 @@ export default {
   font-weight: bold;
   color: white;
   margin: 0 50px 0 50px;
+}
+
+.footer {
+  width: 100vw;
+  position: absolute;
+  bottom: 0px;
 }
 </style>
