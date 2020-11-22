@@ -5,7 +5,7 @@
     color="grey"
     dark
     prominent
-    src="../assets/navbar-pic2.jpg"
+    src="../assets/navbar-pic4.jpg"
   >
     <template v-slot:img="{ props }">
       <v-img v-bind="props" class="image"></v-img>
@@ -28,29 +28,45 @@
       </template>
 
       <v-list>
-        <v-list-item>
+        <v-list-item v-if="status == 'COMPLETED'">
           <v-list-item-title>Ustawienia konta</v-list-item-title>
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="status == 'COMPLETED'">
           <v-list-item-title>Kontakty</v-list-item-title>
         </v-list-item>
-        <v-list-item>
+        <v-list-item v-if="status == 'COMPLETED'">
           <v-list-item-title>Spotkania</v-list-item-title>
         </v-list-item>
         <v-list-item>
-          <v-list-item-title>Wyloguj się</v-list-item-title>
+          <v-list-item-title @click="logoutUser()"
+            >Wyloguj się</v-list-item-title
+          >
         </v-list-item>
       </v-list>
     </v-menu>
 
     <template v-slot:extension>
-      <v-tabs align-with-title>
+      <v-tabs align-with-title v-if="status == 'COMPLETED'">
         <v-tab>Ludzie</v-tab>
         <v-tab>Spotkania</v-tab>
       </v-tabs>
     </template>
   </v-app-bar>
 </template>
+
+<script>
+import { mapMutations, mapActions } from "vuex";
+export default {
+  methods: {
+    ...mapMutations(["logout"]),
+    ...mapActions(["status"]),
+    logoutUser() {
+      this.logout();
+      this.$router.push({ name: "Auth" });
+    },
+  },
+};
+</script>
 
 <style scoped>
 .image {

@@ -5,19 +5,25 @@ Vue.use(Vuetify)
 
 const vuetify = new Vuetify({
     theme: {
-        dark: false,
+        dark: true,
         themes: {
             light: {
-                primary: "#707070",
+                primary: "#447BA6",
                 secondary: '#937166',
                 accent: "#6199BF",
                 error: '#b71c1c',
+                card: "white",
+                warning: "#b71c1c"
             },
             dark: {
-                primary: "#FAF7F1",
+                primary: "#447BA6",
                 secondary: '#937166',
                 accent: "#6199BF",
                 error: '#b71c1c',
+                info: '#2196F3',
+                success: '#4CAF50',
+                warning: '#b71c1c',
+                card: "#121212"
             },
         },
     },

@@ -1,11 +1,13 @@
 <template>
   <div>
     <v-container>
-      <v-flex row justify-center ml-0>
+      <v-flex row justify-center ml-0 mt-10>
         <div class="display-1">Poznawaj osoby z Twojego miasta i okolicy.</div>
       </v-flex>
-      <v-flex row justify-center ml-0>
-        <p class="body-1">Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!</p>
+      <v-flex row justify-center ml-0 mb-5>
+        <p class="body-1">
+          Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!
+        </p>
       </v-flex>
     </v-container>
     <v-flex row justify-center ml-0>
@@ -20,20 +22,20 @@ import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
   components: {
-    PersonCard
+    PersonCard,
   },
 
   data: () => ({}),
   methods: {
-    ...mapActions(["getPeople"])
+    ...mapActions(["getPeople"]),
   },
   computed: {
     ...mapState({
-      people: state => state.peopleStore.people
-    })
+      people: (state) => state.peopleStore.people,
+    }),
   },
   created() {
     this.getPeople();
-  }
+  },
 };
 </script>

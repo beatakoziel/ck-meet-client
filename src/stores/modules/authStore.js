@@ -4,13 +4,13 @@ const AuthRepository = Repository.get("auth");
 // initial state
 const state = () => ({
     jwtToken: localStorage.getItem('user-token') || '',
-    isAuth: false
 })
 
 // getters
 const getters = {
     isAuthenticated() {
-        if (localStorage.getItem("user-token") !== '')
+        console.log(localStorage.getItem("user-token"))
+        if (localStorage.getItem("user-token") !== null)
             return true;
         else return false;
     }
@@ -27,16 +27,12 @@ const actions = {
         });
     },
     register({ dispatch }, payload) {
-        console.log(payload);
         return AuthRepository.register(payload).then(response => {
             dispatch('login', payload);
             return response;
         }).catch(error => {
             return error.response;
         });
-    },
-    test() {
-        AuthRepository.test().then(response => console.log(response));
     }
 }
 
@@ -44,12 +40,10 @@ const actions = {
 const mutations = {
     setJwtToken(state, jwtToken) {
         localStorage.setItem('user-token', jwtToken)
-        state.isAuth = true;
     },
     logout(state) {
         localStorage.removeItem('user-token');
         state.jwtToken = '';
-        state.isAuth = false;
     }
 }
 

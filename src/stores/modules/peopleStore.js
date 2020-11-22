@@ -4,7 +4,16 @@ const UserRepository = Repository.get("users");
 // initial state
 const state = () => ({
     people: [],
-    currentUser: null
+    currentUser: null,
+    personalData: {
+        nickname: "",
+        description: "",
+        dateOfBirth: new Date().toISOString().substr(0, 10),
+        email: "",
+        phoneNumber: "",
+        linkToFacebookProfile: "",
+        gender: "",
+    }
 })
 
 // getters
@@ -18,6 +27,25 @@ const actions = {
         UserRepository.get().then(res => {
             commit('setPeople', res.data)
         });
+    },
+    status() {
+        return UserRepository.status()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response;
+            });
+    },
+    registerPersonalData({ state }) {
+        return UserRepository.registerPersonalData(state.personalData)
+            .then(response => {
+                console.log(response);
+                return response;
+            })
+            .catch(error => {
+                return error.response;
+            });
     }
 }
 

@@ -7,7 +7,4 @@ export default {
     register(payload) {
         return Client.post(`register`, payload);
     },
-    test() {
-        return Client.get(`test`);
-    },
 };

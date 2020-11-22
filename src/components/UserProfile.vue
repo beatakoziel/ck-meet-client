@@ -127,7 +127,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-icon v-bind="attrs" v-on="on" large>mdi-drama-masks</v-icon>
           </template>
-          <span>Motoryzacja</span>
+          <span>Teatr i komedia</span>
         </v-tooltip>
         <v-tooltip bottom>
           <template v-slot:activator="{ on, attrs }">

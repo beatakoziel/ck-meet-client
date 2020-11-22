@@ -11,7 +11,7 @@
 <script>
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -25,14 +25,26 @@ export default {
     //
   }),
   methods: {
+    ...mapActions(["status"]),
     ...mapGetters(["isAuthenticated"]),
   },
-  created() {
+  mounted() {
     if (this.isAuthenticated() === false && this.$route.path !== "/auth") {
+      console.log("auth");
       this.$router.push({ name: "Auth" });
     }
-    if (this.isAuthenticated() === true && this.$route.path == "/auth") {
-      this.$router.push({ name: "People" });
+    if (this.isAuthenticated() === true) {
+      console.log(this.isAuthenticated());
+      var status = this.status();
+      if (status != "COMPLETED") {
+        console.log("register");
+        this.$router.push({ name: "RegisterData" });
+      } else {
+        if (this.$route.path == "/auth") {
+          console.log("people");
+          this.$router.push({ name: "People" });
+        }
+      }
     }
   },
 };
