@@ -44,12 +44,10 @@
 
 <script>
 import PersonalData from "./PersonalData";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 export default {
   data() {
-    return {
-      step: 1,
-    };
+    return {};
   },
   components: {
     PersonalData,
@@ -57,15 +55,19 @@ export default {
   methods: {
     ...mapActions(["status", "registerPersonalData"]),
     realizeFirstStep() {
-      this.registerPersonalData();
-      this.step = 2;
+      this.registerPersonalData().then( () => {
+        this.status();
+      });
     },
   },
   mounted() {
-    var status = this.status();
-    if (status == "NOT_COMPLETED") this.step = 1;
-    else if (status == "PERSONAL_DATA") this.step = 2;
-    else if (status == "PERSONALIZE") this.step = 3;
+    this.status();
+  },
+  computed: {
+    ...mapState({
+      registrationStatus: (state) => state.peopleStore.status,
+      step: (state) => state.peopleStore.step,
+    }),
   },
 };
 </script>

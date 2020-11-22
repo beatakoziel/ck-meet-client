@@ -13,7 +13,9 @@ const state = () => ({
         phoneNumber: "",
         linkToFacebookProfile: "",
         gender: "",
-    }
+    },
+    status: '',
+    step: null
 })
 
 // getters
@@ -28,20 +30,17 @@ const actions = {
             commit('setPeople', res.data)
         });
     },
-    status() {
-        return UserRepository.status()
-            .then(response => {
-                return response;
-            })
-            .catch(error => {
-                return error.response;
+    status({ commit }) {
+        UserRepository.status()
+            .then(res => {
+                commit('setStatus', res.data)
             });
     },
     registerPersonalData({ state }) {
         return UserRepository.registerPersonalData(state.personalData)
             .then(response => {
                 console.log(response);
-                return response;
+                return response.data;
             })
             .catch(error => {
                 return error.response;
@@ -56,6 +55,16 @@ const mutations = {
     },
     setCurrentUser(state, user) {
         state.currentUser = user;
+    },
+    setStatus(state, status) {
+
+        state.status = status;
+        if (status == "NOT_COMPLETED") state.step = 1;
+        else if (status == "PERSONAL_DATA") state.step = 2;
+        else if (status == "PERSONALIZE") state.step = 3;
+        else state.step = 0;
+        console.log(state.status);
+        console.log(state.step);
     }
 }
 
