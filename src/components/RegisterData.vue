@@ -28,15 +28,21 @@
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+        <v-card class="pl-5">
+          <Personalization />
+        </v-card>
 
-        <v-btn color="primary" @click="step = 3"> Kontynuuj </v-btn>
+        <v-btn class="mt-5" color="primary" @click="step = 3">
+          Kontynuuj
+        </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
         <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
 
-        <v-btn color="primary" @click="step = 1"> Kontynuuj </v-btn>
+        <v-btn class="mt-5" color="primary" @click="step = 1">
+          Kontynuuj
+        </v-btn>
       </v-stepper-content>
     </v-stepper-items>
   </v-stepper>
@@ -44,6 +50,7 @@
 
 <script>
 import PersonalData from "./PersonalData";
+import Personalization from "./Personalization";
 import { mapState, mapActions } from "vuex";
 export default {
   data() {
@@ -51,11 +58,12 @@ export default {
   },
   components: {
     PersonalData,
+    Personalization,
   },
   methods: {
     ...mapActions(["status", "registerPersonalData"]),
     realizeFirstStep() {
-      this.registerPersonalData().then( () => {
+      this.registerPersonalData().then(() => {
         this.status();
       });
     },
