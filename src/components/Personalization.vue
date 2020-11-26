@@ -3,8 +3,8 @@
     <v-container body-1 ml-16>Twoje zainteresowania</v-container>
     <v-flex row wrap ml-6>
       <v-container
-        v-for="chunk in interestsChunks"
-        :key="chunk"
+        v-for="(chunk, idx) in interestsChunks"
+        :key="idx"
         class="interests-container"
         ml-2
         mr-2
@@ -74,7 +74,6 @@ export default {
   },
   mounted() {
     this.getInterests();
-    console.log(this.interests);
   },
   components: {
     AgeRangeSlider,

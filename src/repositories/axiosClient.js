@@ -1,21 +1,33 @@
 import axios from "axios";
-
+import { router } from '../main'
 const baseDomain = "http://localhost:8081";
 const baseURL = `${baseDomain}`; // Incase of /api/v1;
-const token = localStorage.getItem("user-token");
-const authHeaders = {
-    "Authorization": "Bearer " + token
-};
-const emptyHeaders = {};
 // ALL DEFUALT CONFIGURATION HERE
 
-export default axios.create({
-    baseURL,
-    headers: getHeaders()
+const client = axios.create({
+    baseURL
 });
 
-function getHeaders() {
-    if (token != null) {
-        return authHeaders;
-    } else return emptyHeaders;
-}
+client.interceptors.response.use((response) => {
+    return response;
+}, (error) => {
+    if (error.response.status == 403) {
+        router.push({ name: "Auth" });
+    }
+    return Promise.reject(error);
+})
+
+client.interceptors.request.use((config) => {
+    let token = localStorage.getItem("user-token")
+    console.log(token)
+    if (token) {
+        config.headers.Authorization = "Bearer " + token
+    }
+    return config
+}, (err) => {
+    console.log(err)
+    return Promise.reject(err)
+})
+
+export default client;
+

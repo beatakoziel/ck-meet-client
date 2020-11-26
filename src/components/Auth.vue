@@ -19,6 +19,7 @@
 import RegisterDialog from "./RegisterDialog";
 import LoginDialog from "./LoginDialog";
 import Footer from "./Footer";
+import { mapMutations } from "vuex";
 export default {
   name: "App",
   components: {
@@ -26,10 +27,12 @@ export default {
     LoginDialog,
     Footer,
   },
-
-  data: () => ({}),
-  computed: {},
-  created() {},
+  methods: {
+    ...mapMutations(["logout"]),
+  },
+  mounted() {
+    this.logout();
+  },
 };
 </script>
 

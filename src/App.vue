@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <NavBar v-if="isAuthenticated()" class="mb-16" />
+    <NavBar v-if="registrationStatus != ''" class="mb-16" />
     <v-main>
       <router-view></router-view>
     </v-main>
-    <Footer v-if="isAuthenticated()" />
+    <Footer v-if="registrationStatus != ''" />
   </v-app>
 </template>
 
@@ -34,7 +34,9 @@ export default {
     }),
   },
   mounted() {
-    this.status();
+    //this.status();
+    console.log(this.isAuthenticated());
+    /* this.status();
     if (this.isAuthenticated() === false && this.$route.path !== "/auth") {
       console.log("auth");
       this.$router.push({ name: "Auth" });
@@ -48,7 +50,7 @@ export default {
           this.$router.push({ name: "People" });
         }
       }
-    }
+    }*/
   },
 };
 </script>

@@ -15,7 +15,8 @@ const state = () => ({
         gender: "",
     },
     status: '',
-    step: null
+    step: null,
+    username: ""
 })
 
 // getters
@@ -33,7 +34,15 @@ const actions = {
     status({ commit }) {
         UserRepository.status()
             .then(res => {
+                console.log('USTAWIAM')
                 commit('setStatus', res.data)
+            });
+    },
+    currentUserName({ state, commit }) {
+        UserRepository.currentUserName()
+            .then(res => {
+                commit('setUsername', res.data)
+                console.log(state.username)
             });
     },
     registerPersonalData({ state }) {
@@ -53,18 +62,23 @@ const mutations = {
     setPeople(state, people) {
         state.people = people
     },
+    setUsername(state, username) {
+        state.username = username
+    },
     setCurrentUser(state, user) {
         state.currentUser = user;
     },
     setStatus(state, status) {
-
         state.status = status;
         if (status == "NOT_COMPLETED") state.step = 1;
         else if (status == "PERSONAL_DATA") state.step = 2;
         else if (status == "PERSONALIZE") state.step = 3;
         else state.step = 0;
-        console.log(state.status);
-        console.log(state.step);
+        console.log('USTAWIAM' + state.status)
+        console.log('USTAWIAM' + state.step)
+    },
+    resetStatus(state) {
+        state.status = "";
     }
 }
 

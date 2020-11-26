@@ -9,7 +9,6 @@ const state = () => ({
 // getters
 const getters = {
     isAuthenticated() {
-        console.log(localStorage.getItem("user-token"))
         if (localStorage.getItem("user-token") !== null)
             return true;
         else return false;
@@ -40,8 +39,10 @@ const actions = {
 const mutations = {
     setJwtToken(state, jwtToken) {
         localStorage.setItem('user-token', jwtToken)
+        state.jwtToken = jwtToken
     },
     logout(state) {
+        console.log('usuniecie tokenu')
         localStorage.removeItem('user-token');
         state.jwtToken = '';
     }

@@ -20,4 +20,7 @@ export default {
     status() {
         return Client.get(`${resource}/status`);
     },
+    currentUserName() {
+        return Client.get(`${resource}/current`);
+    }
 };

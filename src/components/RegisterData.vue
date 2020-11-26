@@ -61,7 +61,7 @@ export default {
     Personalization,
   },
   methods: {
-    ...mapActions(["status", "registerPersonalData"]),
+    ...mapActions(["status", "registerPersonalData", "currentUserName"]),
     realizeFirstStep() {
       this.registerPersonalData().then(() => {
         this.status();
@@ -70,6 +70,9 @@ export default {
   },
   mounted() {
     this.status();
+    this.currentUserName();
+    console.log("STATUS" + this.registrationStatus);
+    console.log("STEP" + this.step);
   },
   computed: {
     ...mapState({

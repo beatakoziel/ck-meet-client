@@ -45,7 +45,7 @@ export default {
     return {
       min: 18,
       max: 80,
-      range: [20, 40],
+      range: [18, 80],
     };
   },
 };

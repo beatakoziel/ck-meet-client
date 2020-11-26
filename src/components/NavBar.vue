@@ -58,10 +58,11 @@
 import { mapMutations, mapActions } from "vuex";
 export default {
   methods: {
-    ...mapMutations(["logout"]),
+    ...mapMutations(["logout", "resetStatus"]),
     ...mapActions(["status"]),
     logoutUser() {
       this.logout();
+      this.resetStatus();
       this.$router.push({ name: "Auth" });
     },
   },

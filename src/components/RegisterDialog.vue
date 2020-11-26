@@ -94,7 +94,7 @@ export default {
             console.log(response);
             if (response.status == "201") {
               this.dialog = false;
-              this.$router.push({ name: "People" });
+              this.$router.push({ name: "RegisterData" });
               this.errorMessage = "";
               console.log();
             } else if (response.status == "400") {

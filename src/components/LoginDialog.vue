@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -60,15 +60,22 @@ export default {
       dialog: false,
     };
   },
+  computed: {
+    ...mapState({
+      registrationStatus: (state) => state.peopleStore.status,
+    }),
+  },
   methods: {
-    ...mapActions(["login", "test"]),
+    ...mapGetters(["isAuthenticated"]),
+    ...mapActions(["login", "status"]),
     loginUser() {
       if (this.loginData.username && this.loginData.password) {
-        this.test();
         this.login(this.loginData).then((response) => {
           if (response.status == "200") {
             this.dialog = false;
-            this.$router.push({ name: "People" });
+            if (this.registrationStatus == "COMPLETED")
+              this.$router.push({ name: "People" });
+            else this.$router.push({ name: "RegisterData" });
             this.errorMessage = "";
           } else if (response.status == "403") {
             this.errorMessage = "Nieprawidłowy login lub hasło";
