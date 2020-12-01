@@ -1,9 +1,12 @@
 import Repository from "../../repositories/repositoryFactory"
 const AuthRepository = Repository.get("auth");
+const UserRepository = Repository.get("users");
 
 // initial state
 const state = () => ({
     jwtToken: localStorage.getItem('user-token') || '',
+    status: localStorage.getItem('status') || '',
+    step: localStorage.getItem('step') || null
 })
 
 // getters
@@ -19,7 +22,7 @@ const getters = {
 const actions = {
     login({ commit }, payload) {
         return AuthRepository.login(payload).then(response => {
-            commit('setJwtToken', response.data)
+            commit('setUserAuthData', response.data)
             return response;
         }).catch(error => {
             return error.response;
@@ -32,20 +35,47 @@ const actions = {
         }).catch(error => {
             return error.response;
         });
-    }
+    },
+    status({ commit }) {
+        UserRepository.status()
+            .then(res => {
+                commit('setStatus', res.data)
+            });
+    },
 }
 
 // mutations
 const mutations = {
-    setJwtToken(state, jwtToken) {
-        localStorage.setItem('user-token', jwtToken)
-        state.jwtToken = jwtToken
+    setUserAuthData(state, data) {
+        localStorage.setItem('user-token', data.token)
+        localStorage.setItem("status", data.status)
+        state.jwtToken = data.token
+        state.status = data.status
+        if (state.status == "NOT_COMPLETED") state.step = 1;
+        else if (state.status == "PERSONAL_DATA") state.step = 2;
+        else if (state.status == "PERSONALIZATION") state.step = 3;
+        else state.step = 0;
+        localStorage.setItem("step", state.step)
+    },
+    setStatus(state, status) {
+        state.status = status;
+        localStorage.setItem("status", status)
+        if (status == "NOT_COMPLETED") state.step = 1;
+        else if (status == "PERSONAL_DATA") state.step = 2;
+        else if (status == "PERSONALIZATION") state.step = 3;
+        else state.step = 0;
+        localStorage.setItem("step", state.step)
     },
     logout(state) {
-        console.log('usuniecie tokenu')
         localStorage.removeItem('user-token');
+        localStorage.removeItem("status")
+        state.status = "";
         state.jwtToken = '';
-    }
+    },
+    resetStatus(state) {
+        state.status = "";
+        localStorage.removeItem("status")
+    },
 }
 
 export default {

@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     ...mapState({
-      registrationStatus: (state) => state.peopleStore.status,
+      registrationStatus: (state) => state.authStore.status,
     }),
   },
   methods: {

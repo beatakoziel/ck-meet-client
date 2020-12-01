@@ -32,16 +32,18 @@
           <Personalization />
         </v-card>
 
-        <v-btn class="mt-5" color="primary" @click="step = 3">
-          Kontynuuj
+        <v-btn class="mt-5" color="primary" @click="realizeSecondStep()">
+          Zatwierdź
         </v-btn>
       </v-stepper-content>
 
       <v-stepper-content step="3">
-        <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
+        <v-card class="pl-5">
+          <ImagePicker />
+        </v-card>
 
-        <v-btn class="mt-5" color="primary" @click="step = 1">
-          Kontynuuj
+        <v-btn class="mt-5" color="primary" @click="realizeThirdStep()">
+          Zatwierdź
         </v-btn>
       </v-stepper-content>
     </v-stepper-items>
@@ -51,6 +53,7 @@
 <script>
 import PersonalData from "./PersonalData";
 import Personalization from "./Personalization";
+import ImagePicker from "./ImagePicker";
 import { mapState, mapActions } from "vuex";
 export default {
   data() {
@@ -59,25 +62,37 @@ export default {
   components: {
     PersonalData,
     Personalization,
+    ImagePicker,
   },
   methods: {
-    ...mapActions(["status", "registerPersonalData", "currentUserName"]),
+    ...mapActions([
+      "status",
+      "registerPersonalData",
+      "registerPersonalizationData",
+      "uploadImage",
+    ]),
     realizeFirstStep() {
       this.registerPersonalData().then(() => {
         this.status();
       });
     },
+    realizeSecondStep() {
+      this.registerPersonalizationData().then(() => {
+        this.status();
+      });
+    },
+    realizeThirdStep() {
+      this.uploadImage().then(() => {
+        this.status();
+        this.$router.push({ name: "People" });
+      });
+    },
   },
-  mounted() {
-    this.status();
-    this.currentUserName();
-    console.log("STATUS" + this.registrationStatus);
-    console.log("STEP" + this.step);
-  },
+  mounted() {},
   computed: {
     ...mapState({
-      registrationStatus: (state) => state.peopleStore.status,
-      step: (state) => state.peopleStore.step,
+      registrationStatus: (state) => state.authStore.status,
+      step: (state) => state.authStore.step,
     }),
   },
 };

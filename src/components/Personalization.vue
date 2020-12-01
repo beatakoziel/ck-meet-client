@@ -14,39 +14,35 @@
           mr-6
           v-for="interest in chunk"
           :key="interest.key"
-          v-model="selectedInterests"
+          v-model="personalizationData.interests"
           :value="interest.key"
           :label="interest.value"
         ></v-checkbox>
       </v-container>
     </v-flex>
-    <v-flex row wrap ml-6>
-      <v-container body-1 ml-16>Płeć osoby, którą chcesz poznać</v-container>
-      <v-flex column wrap ml-6 class="interests-container">
-        <v-checkbox
-          class="margin-checkbox"
-          mr-6
-          v-model="selectedGenders"
-          value="FEMALE"
-          label="Kobieta"
-        ></v-checkbox>
-        <v-checkbox
-          class="margin-checkbox"
-          mr-6
-          v-model="selectedGenders"
-          value="MALE"
-          label="Mężczyzna"
-        ></v-checkbox>
-      </v-flex>
+    <v-container body-1 ml-16>Płeć osoby, którą chcesz poznać</v-container>
+    <v-flex column wrap ml-6 class="interests-container">
+      <v-checkbox
+        class="margin-checkbox"
+        mr-6
+        v-model="personalizationData.preferredGenderToMeet"
+        value="FEMALE"
+        label="Kobieta"
+      ></v-checkbox>
+      <v-checkbox
+        class="margin-checkbox"
+        mr-6
+        v-model="personalizationData.preferredGenderToMeet"
+        value="MALE"
+        label="Mężczyzna"
+      ></v-checkbox>
     </v-flex>
-    <v-flex row ml-6 wrap>
-      <v-container body-1 ml-16 mr-16
-        >Wiek osoby, którą chcesz poznać</v-container
-      >
-      <v-container ml-0 mr-16 class="age-container">
-        <AgeRangeSlider />
-      </v-container>
-    </v-flex>
+    <v-container body-1 ml-16 mr-16
+      >Wiek osoby, którą chcesz poznać</v-container
+    >
+    <v-container ml-0 mr-16 class="age-container">
+      <AgeRangeSlider />
+    </v-container>
   </v-flex>
 </template>
 
@@ -64,6 +60,7 @@ export default {
   computed: {
     ...mapState({
       interests: (state) => state.infoStore.interests,
+      personalizationData: (state) => state.peopleStore.personalizationData,
     }),
     interestsChunks() {
       return _.chunk(Object.values(this.interests), 4);

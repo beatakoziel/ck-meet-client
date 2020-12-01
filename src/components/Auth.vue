@@ -31,7 +31,6 @@ export default {
     ...mapMutations(["logout"]),
   },
   mounted() {
-    this.logout();
   },
 };
 </script>

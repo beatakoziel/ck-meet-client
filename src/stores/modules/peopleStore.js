@@ -14,9 +14,17 @@ const state = () => ({
         linkToFacebookProfile: "",
         gender: "",
     },
-    status: '',
+    personalizationData: {
+        interests: [],
+        preferredGenderToMeet: [],
+        preferredAgeToMeetFrom: 18,
+        preferredAgeToMeetTo: 80
+    },
     step: null,
-    username: ""
+    username: "",
+    image: {
+        image: null
+    }
 })
 
 // getters
@@ -30,13 +38,6 @@ const actions = {
         UserRepository.get().then(res => {
             commit('setPeople', res.data)
         });
-    },
-    status({ commit }) {
-        UserRepository.status()
-            .then(res => {
-                console.log('USTAWIAM')
-                commit('setStatus', res.data)
-            });
     },
     currentUserName({ state, commit }) {
         UserRepository.currentUserName()
@@ -54,6 +55,28 @@ const actions = {
             .catch(error => {
                 return error.response;
             });
+    },
+    registerPersonalizationData({ state }) {
+        return UserRepository.registerPersonalizationData(state.personalizationData)
+            .then(response => {
+                console.log(response);
+                return response.data;
+            })
+            .catch(error => {
+                return error.response;
+            });
+    },
+    uploadImage({ state }) {
+        const fd = new FormData();
+        fd.append('image', state.image.image)
+        console.log("halo")
+        console.log(state.image.image)
+        console.log(fd)
+        return UserRepository.uploadImage(fd)
+            .then(response => {
+                console.log("halo2")
+                console.log(response);
+            })
     }
 }
 
@@ -68,17 +91,8 @@ const mutations = {
     setCurrentUser(state, user) {
         state.currentUser = user;
     },
-    setStatus(state, status) {
-        state.status = status;
-        if (status == "NOT_COMPLETED") state.step = 1;
-        else if (status == "PERSONAL_DATA") state.step = 2;
-        else if (status == "PERSONALIZE") state.step = 3;
-        else state.step = 0;
-        console.log('USTAWIAM' + state.status)
-        console.log('USTAWIAM' + state.step)
-    },
-    resetStatus(state) {
-        state.status = "";
+    setImage(state, image) {
+        state.image.image = image;
     }
 }
 

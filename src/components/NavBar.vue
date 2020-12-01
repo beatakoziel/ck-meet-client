@@ -37,10 +37,8 @@
         <v-list-item v-if="status == 'COMPLETED'">
           <v-list-item-title>Spotkania</v-list-item-title>
         </v-list-item>
-        <v-list-item>
-          <v-list-item-title @click="logoutUser()"
-            >Wyloguj się</v-list-item-title
-          >
+        <v-list-item @click="logoutUser()">
+          <v-list-item-title>Wyloguj się</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>

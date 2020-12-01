@@ -12,6 +12,7 @@
           >
             <template v-slot:prepend>
               <v-text-field
+                v-model="personalizationData.preferredAgeToMeetFrom"
                 :value="range[0]"
                 class="mt-0 pt-0"
                 hide-details
@@ -23,6 +24,7 @@
             </template>
             <template v-slot:append>
               <v-text-field
+                v-model="personalizationData.preferredAgeToMeetTo"
                 :value="range[1]"
                 class="mt-0 pt-0"
                 hide-details
@@ -40,6 +42,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -47,6 +50,11 @@ export default {
       max: 80,
       range: [18, 80],
     };
+  },
+  computed: {
+    ...mapState({
+      personalizationData: (state) => state.peopleStore.personalizationData,
+    }),
   },
 };
 </script>

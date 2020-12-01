@@ -1,10 +1,10 @@
 <template>
   <v-app>
-    <NavBar v-if="registrationStatus != ''" class="mb-16" />
+    <NavBar v-if="registrationStatus" class="mb-16" />
     <v-main>
       <router-view></router-view>
     </v-main>
-    <Footer v-if="registrationStatus != ''" />
+    <Footer v-if="registrationStatus" />
   </v-app>
 </template>
 
@@ -25,32 +25,34 @@ export default {
     //
   }),
   methods: {
-    ...mapActions(["status"]),
     ...mapGetters(["isAuthenticated"]),
+    ...mapActions(["status"]),
   },
   computed: {
     ...mapState({
-      registrationStatus: (state) => state.peopleStore.status,
+      registrationStatus: (state) => state.authStore.status,
     }),
+    statusFromStorage: function () {
+      return localStorage.getItem("status");
+    },
   },
   mounted() {
-    //this.status();
+    this.status();
     console.log(this.isAuthenticated());
-    /* this.status();
     if (this.isAuthenticated() === false && this.$route.path !== "/auth") {
       console.log("auth");
       this.$router.push({ name: "Auth" });
     }
     if (this.isAuthenticated() === true) {
-      var status = this.registrationStatus;
-      if (status != "COMPLETED") {
+      if (this.registrationStatus != "COMPLETED") {
+        console.log("authenticated");
         this.$router.push({ name: "RegisterData" });
       } else {
-        if (this.$route.path == "/auth") {
+        if (this.$route.path == "/auth" || this.$route.path == "/register") {
           this.$router.push({ name: "People" });
         }
       }
-    }*/
+    }
   },
 };
 </script>
