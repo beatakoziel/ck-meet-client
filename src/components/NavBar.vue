@@ -28,13 +28,13 @@
       </template>
 
       <v-list>
-        <v-list-item v-if="status == 'COMPLETED'">
+        <v-list-item v-if="registrationStatus == 'COMPLETED'">
           <v-list-item-title>Ustawienia konta</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="status == 'COMPLETED'">
+        <v-list-item v-if="registrationStatus == 'COMPLETED'">
           <v-list-item-title>Kontakty</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="status == 'COMPLETED'">
+        <v-list-item v-if="registrationStatus == 'COMPLETED'">
           <v-list-item-title>Spotkania</v-list-item-title>
         </v-list-item>
         <v-list-item @click="logoutUser()">
@@ -44,7 +44,7 @@
     </v-menu>
 
     <template v-slot:extension>
-      <v-tabs align-with-title v-if="status == 'COMPLETED'">
+      <v-tabs align-with-title v-if="registrationStatus == 'COMPLETED'">
         <v-tab>Ludzie</v-tab>
         <v-tab>Spotkania</v-tab>
       </v-tabs>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   methods: {
     ...mapMutations(["logout", "resetStatus"]),
@@ -63,6 +63,11 @@ export default {
       this.resetStatus();
       this.$router.push({ name: "Auth" });
     },
+  },
+  computed: {
+    ...mapState({
+      registrationStatus: (state) => state.authStore.status,
+    }),
   },
 };
 </script>
