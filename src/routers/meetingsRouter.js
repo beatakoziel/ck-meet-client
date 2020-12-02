@@ -1,5 +1,5 @@
 import Meetings from "../components/Meetings"
-export const peopleRoutes = [
+export const meetingsRoutes = [
     {
         path: "/meetings",
         name: 'Meetings',

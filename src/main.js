@@ -4,11 +4,12 @@ import vuetify from './plugins/vuetify'
 import { store } from './stores/index'
 import { peopleRoutes } from "./routers/peopleRouter"
 import { authRoutes } from "./routers/authRouter"
+import { meetingsRoutes } from "./routers/meetingsRouter"
 import VueRouter from "vue-router"
 import 'vuetify/dist/vuetify.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-let routes = [...peopleRoutes, ...authRoutes]
+let routes = [...peopleRoutes, ...authRoutes, ...meetingsRoutes]
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
