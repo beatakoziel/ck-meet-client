@@ -23,7 +23,7 @@ export default {
     status() {
         return Client.get(`${resource}/status`);
     },
-    currentUserName() {
+    currentUser() {
         return Client.get(`${resource}/current`);
     },
     uploadImage(payload) {

@@ -28,7 +28,10 @@
       </template>
 
       <v-list>
-        <v-list-item v-if="registrationStatus == 'COMPLETED'">
+        <v-list-item
+          v-if="registrationStatus == 'COMPLETED'"
+          @click="$router.push({ name: 'ProfileSettings' })"
+        >
           <v-list-item-title>Ustawienia konta</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="registrationStatus == 'COMPLETED'">
@@ -45,8 +48,8 @@
 
     <template v-slot:extension>
       <v-tabs align-with-title v-if="registrationStatus == 'COMPLETED'">
-        <v-tab>Ludzie</v-tab>
-        <v-tab>Spotkania</v-tab>
+        <v-tab @click="$router.push({ name: 'People' })">Ludzie</v-tab>
+        <v-tab @click="$router.push({ name: 'Meetings' })">Spotkania</v-tab>
       </v-tabs>
     </template>
   </v-app-bar>
@@ -56,11 +59,11 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 export default {
   methods: {
-    ...mapMutations(["logout", "resetStatus"]),
+    ...mapMutations(["logout", "resetState"]),
     ...mapActions(["status"]),
     logoutUser() {
       this.logout();
-      this.resetStatus();
+      this.resetState();
       this.$router.push({ name: "Auth" });
     },
   },

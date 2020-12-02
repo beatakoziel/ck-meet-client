@@ -2,7 +2,7 @@ import Repository from "../../repositories/repositoryFactory"
 const UserRepository = Repository.get("users");
 
 // initial state
-const state = () => ({
+const getDefaultState = () => ({
     people: [],
     currentUser: null,
     personalData: {
@@ -26,6 +26,7 @@ const state = () => ({
         image: null
     }
 })
+const state = getDefaultState()
 
 // getters
 const getters = {
@@ -39,11 +40,11 @@ const actions = {
             commit('setPeople', res.data)
         });
     },
-    currentUserName({ state, commit }) {
-        UserRepository.currentUserName()
+    currentUser({ state, commit }) {
+        UserRepository.currentUser()
             .then(res => {
-                commit('setUsername', res.data)
-                console.log(state.username)
+                commit('setCurrentUser', res.data)
+                console.log(state.currentUser)
             });
     },
     registerPersonalData({ state }) {
@@ -69,12 +70,8 @@ const actions = {
     uploadImage({ state }) {
         const fd = new FormData();
         fd.append('image', state.image.image)
-        console.log("halo")
-        console.log(state.image.image)
-        console.log(fd)
         return UserRepository.uploadImage(fd)
             .then(response => {
-                console.log("halo2")
                 console.log(response);
             })
     }
@@ -90,6 +87,21 @@ const mutations = {
     },
     setCurrentUser(state, user) {
         state.currentUser = user;
+        state.personalData.nickname = user.nickname;
+        state.personalData.description = user.description;
+        state.personalData.dateOfBirth = user.dateOfBirth[2] + "-" + user.dateOfBirth[1] + "-" + user.dateOfBirth[0];
+        state.personalData.email = user.contactData.email;
+        state.personalData.phoneNumber = user.contactData.phoneNumber
+        state.personalData.linkToFacebookProfile = user.contactData.linkToFacebookProfile
+        state.personalData.gender = user.gender
+        state.personalizationData.interests = user.interests
+        state.personalizationData.preferredGenderToMeet = user.preferredGenderToMeet
+        state.personalizationData.preferredAgeToMeetFrom = user.preferredAgeToMeetFrom
+        state.personalizationData.preferredAgeToMeetTo = user.preferredAgeToMeetTo
+        state.image.image = user.avatar.data
+    },
+    resetState() {
+        Object.assign(state, getDefaultState())
     },
     setImage(state, image) {
         state.image.image = image;

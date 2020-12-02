@@ -70,6 +70,7 @@ export default {
       "registerPersonalData",
       "registerPersonalizationData",
       "uploadImage",
+      "currentUser",
     ]),
     realizeFirstStep() {
       this.registerPersonalData().then(() => {

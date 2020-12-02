@@ -1,16 +1,27 @@
 <template>
   <v-flex row wrap>
     <v-container>
-      <v-container @click="check()" body-1 ml-16>Zdjęcie profilowe</v-container>
+      <v-container ml-0 mr-0>
+        <v-img
+          v-if="image.image == null"
+          height="250px"
+          width="250px"
+          src="../assets/default-image.png"
+        />
+        <v-img
+          v-else
+          height="250px"
+          width="250px"
+          :src="'data:image/jpeg;base64,' + image.image"
+        />
+      </v-container>
       <v-file-input
-        @click="check()"
         accept="image/png, image/jpeg, image/bmp"
-        placeholder="Pick an avatar"
+        placeholder="Wybierz zdjęcie z komputera"
         prepend-icon="mdi-camera"
         label="Avatar"
         v-model="image.image"
       ></v-file-input>
-      {{ image }}
     </v-container>
   </v-flex>
 </template>
@@ -31,13 +42,8 @@ export default {
   },
   methods: {
     ...mapActions(["getInterests"]),
-    check() {
-      console.log(this.image);
-    },
   },
-  mounted() {
-    console.log(this.image);
-  },
+  mounted() {},
 };
 </script>
 <style scoped>

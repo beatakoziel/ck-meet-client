@@ -1,7 +1,7 @@
 <template>
   <v-flex row wrap>
     <v-container body-1 ml-16>Twoje zainteresowania</v-container>
-    <v-flex row wrap ml-6>
+    <v-flex row wrap ml-1>
       <v-container
         v-for="(chunk, idx) in interestsChunks"
         :key="idx"

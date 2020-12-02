@@ -1,6 +1,6 @@
-import Repository from "../../repositories/repositoryFactory"
-const AuthRepository = Repository.get("auth");
-const UserRepository = Repository.get("users");
+
+import AuthRepository from "../../repositories/authRepository"
+import UserRepository from "../../repositories/userRepository"
 
 // initial state
 const state = () => ({
@@ -71,10 +71,6 @@ const mutations = {
         localStorage.removeItem("status")
         state.status = "";
         state.jwtToken = '';
-    },
-    resetStatus(state) {
-        state.status = "";
-        localStorage.removeItem("status")
     },
 }
 
