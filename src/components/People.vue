@@ -6,10 +6,18 @@
       </v-flex>
       <v-flex row justify-center ml-0 mb-5>
         <p class="body-1">
-          Przeglądaj profile, a jeśli chcesz się z kimś poznać - pomachaj!
+          Przeglądaj profile, szukaj wspólnych zainteresowań.
         </p>
       </v-flex>
     </v-container>
+    <v-toolbar>
+      <v-icon color="primary" large>mdi-information-outline</v-icon>
+      <span>
+        Jeśli chcesz się z kimś zapoznać wejdź w szczegóły profilu i przywitaj
+        się!
+      </span>
+      <v-spacer></v-spacer>
+    </v-toolbar>
     <v-flex row justify-center ml-0>
       <PersonCard v-for="user in people" :key="user.id" :userData="user" />
     </v-flex>
@@ -39,3 +47,11 @@ export default {
   },
 };
 </script>
+<style scoped>
+span {
+  margin-left: 5px;
+}
+header {
+  margin-top: 20px;
+}
+</style>
