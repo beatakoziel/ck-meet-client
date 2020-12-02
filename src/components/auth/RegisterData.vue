@@ -51,9 +51,9 @@
 </template>
 
 <script>
-import PersonalData from "./PersonalData";
-import Personalization from "./Personalization";
-import ImagePicker from "./ImagePicker";
+import PersonalData from "../people/PersonalData";
+import Personalization from "../people/Personalization";
+import ImagePicker from "../common/ImagePicker";
 import { mapState, mapActions } from "vuex";
 export default {
   data() {

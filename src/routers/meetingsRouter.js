@@ -1,4 +1,4 @@
-import Meetings from "../components/Meetings"
+import Meetings from "../components/meetings/Meetings"
 export const meetingsRoutes = [
     {
         path: "/meetings",

@@ -2,7 +2,9 @@
   <div>
     <v-container>
       <v-flex row justify-center ml-0 mt-10>
-        <div class="display-1">Poznawaj osoby z Twojego miasta i okolicy.</div>
+        <div class="display-1">
+          Zyskaj nowych znajomych z Twojego miasta i okolicy.
+        </div>
       </v-flex>
       <v-flex row justify-center ml-0 mb-5>
         <p class="body-1">

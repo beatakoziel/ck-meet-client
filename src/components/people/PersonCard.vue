@@ -4,7 +4,7 @@
       <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
     </template>
 
-    <v-img v-if="userData.avatarBytes==null" height="180px" src="../assets/default-image.png" />
+    <v-img v-if="userData.avatarBytes==null" height="180px" src="../../assets/default-image.png" />
     <v-img v-else height="180px" :src="'data:image/jpeg;base64,' + userData.avatarBytes" />
 
     <v-card-title>{{userData.nickname}}, {{userData.age}} {{ageString}}</v-card-title>

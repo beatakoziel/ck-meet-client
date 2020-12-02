@@ -6,7 +6,7 @@
           v-if="image.image == null"
           height="250px"
           width="250px"
-          src="../assets/default-image.png"
+          src="../../assets/default-image.png"
         />
         <v-img
           v-else

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
+import NavBar from "./components/common/NavBar";
+import Footer from "./components/common/Footer";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {

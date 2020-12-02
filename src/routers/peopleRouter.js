@@ -1,6 +1,6 @@
-import People from "../components/People"
-import UserProfile from "../components/UserProfile"
-import ProfileSettings from "../components/ProfileSettings"
+import People from "../components/people/People"
+import UserProfile from "../components/people/UserProfile"
+import ProfileSettings from "../components/people/ProfileSettings"
 export const peopleRoutes = [
     {
         path: "/users",

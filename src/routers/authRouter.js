@@ -1,5 +1,5 @@
-import Auth from "../components/Auth"
-import RegisterData from "../components/RegisterData"
+import Auth from "../components/auth/Auth"
+import RegisterData from "../components/auth/RegisterData"
 
 export const authRoutes = [
     {

@@ -93,7 +93,7 @@
 <script>
 import PersonalData from "./PersonalData";
 import Personalization from "./Personalization";
-import ImagePicker from "./ImagePicker";
+import ImagePicker from "../common/ImagePicker";
 import { mapActions } from "vuex";
 
 export default {

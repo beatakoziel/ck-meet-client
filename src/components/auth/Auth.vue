@@ -18,7 +18,7 @@
 <script>
 import RegisterDialog from "./RegisterDialog";
 import LoginDialog from "./LoginDialog";
-import Footer from "./Footer";
+import Footer from "../common/Footer";
 import { mapMutations } from "vuex";
 export default {
   name: "App",
@@ -30,8 +30,7 @@ export default {
   methods: {
     ...mapMutations(["logout"]),
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
@@ -41,7 +40,7 @@ export default {
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)),
-    url("../assets/navbar-pic5.jpg");
+    url("../../assets/navbar-pic5.jpg");
   background-size: cover;
   background-position: center;
   display: flex;

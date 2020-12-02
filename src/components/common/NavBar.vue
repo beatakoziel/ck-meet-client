@@ -5,7 +5,7 @@
     color="grey"
     dark
     prominent
-    src="../assets/navbar-pic4.jpg"
+    src="../../assets/navbar-pic4.jpg"
   >
     <template v-slot:img="{ props }">
       <v-img v-bind="props" class="image"></v-img>

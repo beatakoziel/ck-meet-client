@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import DatePicker from "./DatePicker";
+import DatePicker from "../common/DatePicker";
 import { mapState } from "vuex";
 export default {
   data() {
