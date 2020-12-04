@@ -8,8 +8,22 @@
       </span>
       <v-spacer></v-spacer>
     </v-toolbar>
+    <v-flex row justify-end mt-6 mr-12>
+      <v-btn class="ma-2" outlined color="primary">
+        <v-icon large>mdi-plus</v-icon>
+        Dodaj spotkanie
+      </v-btn>
+      <v-btn class="ma-2" outlined color="secondary">
+        <v-icon large>mdi-filter</v-icon>
+        Filtruj
+      </v-btn>
+    </v-flex>
     <v-flex row justify-center ml-0>
-      <MeetingCard />
+      <MeetingCard
+        v-for="meeting in meetings"
+        :key="meeting.id"
+        :meetingData="meeting"
+      />
     </v-flex>
   </div>
 </template>
@@ -25,15 +39,17 @@ export default {
 
   data: () => ({}),
   methods: {
-    ...mapActions(["getPeople"]),
+    ...mapActions(["getMeetings"]),
   },
   computed: {
     ...mapState({
-      people: (state) => state.peopleStore.people,
+      meetings: (state) => state.meetingsStore.meetings,
     }),
   },
   created() {
-    this.getPeople();
+    this.getMeetings().then((response) => {
+      console.log(response);
+    });
   },
 };
 </script>

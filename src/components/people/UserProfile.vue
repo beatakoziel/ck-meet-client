@@ -159,7 +159,7 @@
             <span>Sporty zimowe</span>
           </v-tooltip>
           <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
+            <template >
               <v-icon v-bind="attrs" v-on="on" large>mdi-swim</v-icon>
             </template>
             <span>Sporty wodne</span>

@@ -21,13 +21,11 @@ client.interceptors.response.use((response) => {
 
 client.interceptors.request.use((config) => {
     let token = localStorage.getItem("user-token")
-    console.log(token)
     if (token) {
         config.headers.Authorization = "Bearer " + token
     }
     return config
 }, (err) => {
-    console.log(err)
     return Promise.reject(err)
 })
 

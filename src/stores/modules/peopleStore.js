@@ -40,17 +40,15 @@ const actions = {
             commit('setPeople', res.data)
         });
     },
-    currentUser({ state, commit }) {
+    currentUser({ commit }) {
         UserRepository.currentUser()
             .then(res => {
                 commit('setCurrentUser', res.data)
-                console.log(state.currentUser)
             });
     },
     registerPersonalData({ state }) {
         return UserRepository.registerPersonalData(state.personalData)
             .then(response => {
-                console.log(response);
                 return response.data;
             })
             .catch(error => {
@@ -60,7 +58,6 @@ const actions = {
     registerPersonalizationData({ state }) {
         return UserRepository.registerPersonalizationData(state.personalizationData)
             .then(response => {
-                console.log(response);
                 return response.data;
             })
             .catch(error => {
@@ -70,10 +67,7 @@ const actions = {
     uploadImage({ state }) {
         const fd = new FormData();
         fd.append('image', state.image.image)
-        return UserRepository.uploadImage(fd)
-            .then(response => {
-                console.log(response);
-            })
+        return UserRepository.uploadImage(fd);
     }
 }
 

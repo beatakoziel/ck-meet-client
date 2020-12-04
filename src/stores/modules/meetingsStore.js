@@ -1,9 +1,9 @@
 import Repository from "../../repositories/repositoryFactory"
-const InfoRepository = Repository.get("info");
+const MeetingsRepository = Repository.get("meetings");
 
 // initial state
 const state = () => ({
-    interests: []
+    meetings: []
 })
 
 // getters
@@ -12,20 +12,18 @@ const getters = {
 
 // actions
 const actions = {
-    getInterests({ commit }) {
-        return InfoRepository.getInterests().then(response => {
-            commit('setInterests', response.data)
+    getMeetings({ commit }) {
+        return MeetingsRepository.get().then(response => {
+            commit('setMeetings', response.data)
             return response;
-        }).catch(error => {
-            return error.response;
-        });
+        })
     },
 }
 
 // mutations
 const mutations = {
-    setInterests(state, interests) {
-        state.interests = interests
+    setMeetings(state, meetings) {
+        state.meetings = meetings
     },
 }
 

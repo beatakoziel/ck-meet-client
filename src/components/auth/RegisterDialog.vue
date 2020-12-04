@@ -91,12 +91,10 @@ export default {
         ) {
           this.registerData.password = this.passwordsToCheck.password;
           this.register(this.registerData).then((response) => {
-            console.log(response);
             if (response.status == "201") {
               this.dialog = false;
               this.$router.push({ name: "RegisterData" });
               this.errorMessage = "";
-              console.log();
             } else if (response.status == "400") {
               this.errorMessage = "Użytkownik o takiej nazwie już istnieje";
             } else {

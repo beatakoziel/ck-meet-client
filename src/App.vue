@@ -38,14 +38,11 @@ export default {
   },
   mounted() {
     this.status();
-    console.log(this.isAuthenticated());
     if (this.isAuthenticated() === false && this.$route.path !== "/auth") {
-      console.log("auth");
       this.$router.push({ name: "Auth" });
     }
     if (this.isAuthenticated() === true) {
       if (this.registrationStatus != "COMPLETED") {
-        console.log("authenticated");
         this.$router.push({ name: "RegisterData" });
       } else {
         if (this.$route.path == "/auth" || this.$route.path == "/register") {
