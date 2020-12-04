@@ -3,7 +3,8 @@ const MeetingsRepository = Repository.get("meetings");
 
 // initial state
 const state = () => ({
-    meetings: []
+    meetings: [],
+    currentMeeting: null
 })
 
 // getters
@@ -25,6 +26,9 @@ const mutations = {
     setMeetings(state, meetings) {
         state.meetings = meetings
     },
+    setCurrentViewedMeeting(state, meeting) {
+        state.currentMeeting = meeting;
+    }
 }
 
 export default {

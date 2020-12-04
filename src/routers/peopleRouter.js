@@ -3,7 +3,7 @@ import UserProfile from "../components/people/UserProfile"
 import ProfileSettings from "../components/people/ProfileSettings"
 export const peopleRoutes = [
     {
-        path: "/users",
+        path: "/people",
         name: 'People',
         component: People
     },
@@ -13,7 +13,7 @@ export const peopleRoutes = [
         component: ProfileSettings
     },
     {
-        path: '/users/profile/:id',
+        path: '/people/profile/:id',
         name: 'Profile',
         component: UserProfile
     },

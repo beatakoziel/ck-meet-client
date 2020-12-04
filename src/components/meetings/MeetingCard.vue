@@ -50,7 +50,11 @@
         <v-card-text>{{ meetingData.description }}</v-card-text>
 
         <v-card-actions>
-          <v-btn color="accent" text>Szczegóły</v-btn>
+          <router-link
+            :to="{ name: 'MeetingProfile', params: { id: meetingData.id } }"
+          >
+            <v-btn color="accent" text @click="setMeeting">Pokaż profil</v-btn>
+          </router-link>
         </v-card-actions>
       </div>
 
@@ -62,11 +66,18 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
 export default {
   props: ["meetingData"],
   data: () => ({}),
   mounted() {
     console.log(this.meetingData);
+  },
+  methods: {
+    ...mapMutations(["setCurrentViewedMeeting"]),
+    setMeeting() {
+      this.setCurrentViewedMeeting(this.meetingData);
+    },
   },
 };
 </script>
@@ -79,5 +90,9 @@ i {
   margin-left: 10px;
   font-size: 20px;
   margin-top: 10px;
+}
+
+a {
+  text-decoration: none;
 }
 </style>
