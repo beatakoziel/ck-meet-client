@@ -1,13 +1,13 @@
 <template>
 
   <v-card pb-5>
-<!--    <v-toolbar>
-      <v-icon color="primary" large>mdi-information-outline</v-icon>
-      <span>
-        Jeśli chcesz się zapoznać kliknij przycisk "Przywitaj się<v-icon class="margin-icon" v-bind="attrs" v-on="on">mdi-hand-right</v-icon>"!
-      </span>
-      <v-spacer></v-spacer>
-    </v-toolbar>-->
+    <!--    <v-toolbar>
+          <v-icon color="primary" large>mdi-information-outline</v-icon>
+          <span>
+            Jeśli chcesz się zapoznać kliknij przycisk "Przywitaj się<v-icon class="margin-icon" v-bind="attrs" v-on="on">mdi-hand-right</v-icon>"!
+          </span>
+          <v-spacer></v-spacer>
+        </v-toolbar>-->
     <v-flex row justify-center mt-10>
       {{ currentViewedUser.id }}
       <v-container ml-0 mr-16 class="my-6 inner-container">
@@ -40,7 +40,8 @@
           </v-tooltip>
         </p>
         <v-container class="hello-container" ml-0 mr-0 pl-0 pr-0>
-          <HighFiveDialog/>
+          <SayHelloDialog/>
+          <RevertSayHelloDialog/>
           <p class="caption info-caption">
             Jeżeli Ty i ten użytkownik przybijecie sobie piątki wówczas zostanie
             odblokowana możliwość skontaktowania się ze sobą.
@@ -95,7 +96,8 @@
 
 <script>
 import {mapActions, mapState} from "vuex";
-import HighFiveDialog from "@/components/people/HighFiveDialog";
+import SayHelloDialog from "@/components/people/SayHelloDialog";
+import RevertSayHelloDialog from "@/components/people/RevertSayHelloDialog";
 
 export default {
   data() {
@@ -110,7 +112,7 @@ export default {
       ]
     };
   },
-  components: {HighFiveDialog},
+  components: {SayHelloDialog, RevertSayHelloDialog},
   methods: {
     setAgeString() {
       var lastDigit = this.currentViewedUser.age % 10;

@@ -1,15 +1,16 @@
 <template>
   <v-row>
     <v-btn ml-2 @click.stop="dialog = true">
-      Przywitaj się
+      Cofnij przywitanie
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-icon class="margin-icon" v-bind="attrs" v-on="on"
-          >mdi-hand-right
+          <v-icon style="margin-left: 5px;" class="margin-icon" v-bind="attrs" v-on="on"
+          >mdi-hand-wash
           </v-icon
           >
         </template>
-        <span>Przybij piątkę!</span>
+        <span>Cofnięcie spowoduje usunięcie osoby z grona przywitanych</span>
+<!--        <span>Cofnięcie spowoduje usunięcie osoby z grona znajomych</span>-->
       </v-tooltip>
     </v-btn>
 
@@ -20,17 +21,17 @@
     >
       <v-card>
         <v-card-title class=" headline justify-center">
-          <p v-if="personalData.gender==='FEMALE'">Przywitałaś się!</p>
-          <p v-if="personalData.gender==='MALE'">Przywitałeś się!</p>
+          <p v-if="personalData.gender==='FEMALE'">Cofnęłaś przywitanie!</p>
+          <p v-if="personalData.gender==='MALE'">Cofnąłeś przywitanie!</p>
           <!--<p>Jesteście znajomymi!</p>-->
         </v-card-title>
           <v-flex row class="justify-center mr-0">
             <p>
-<!--              <v-icon style="font-size: 200px">mdi-handshake</v-icon>-->
-              <v-icon style="font-size: 200px">mdi-hand</v-icon>
+              <v-icon style="font-size: 200px">mdi-hand-wash</v-icon>
             </p>
-            <p style="text-align: center">Druga osoba musi także się z Tobą przywitać abyście zostali znajomymi.</p>
-<!--            <p style="text-align: center">Teraz jesteście znajomymi i możecie się ze sobą skontaktować.</p>-->
+            <p>Osoba została usunięta z grona przez Ciebie przywitanych.</p>
+            <!--<p style="text-align: center">Osoba została usunięta z grona Twoich znajomych.</p>-->
+            <p>Nie możecie się ze sobą skontaktować.</p>
           </v-flex>
         <v-card-actions>
           <v-spacer></v-spacer>
