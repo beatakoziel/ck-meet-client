@@ -12,14 +12,6 @@
         </p>
       </v-flex>
     </v-container>
-    <v-toolbar>
-      <v-icon color="primary" large>mdi-information-outline</v-icon>
-      <span>
-        Jeśli chcesz się z kimś zapoznać wejdź w szczegóły profilu i przywitaj
-        się!
-      </span>
-      <v-spacer></v-spacer>
-    </v-toolbar>
     <v-flex row justify-center ml-0>
       <PersonCard v-for="user in people" :key="user.id" :userData="user" />
     </v-flex>

@@ -43,7 +43,7 @@ const actions = {
     currentUser({ commit }) {
         UserRepository.currentUser()
             .then(res => {
-                commit('setCurrentUser', res.data)
+                commit('setCurrentLoggedUser', res.data)
             });
     },
     registerPersonalData({ state }) {
@@ -81,6 +81,9 @@ const mutations = {
     },
     setCurrentUser(state, user) {
         state.currentUser = user;
+        state.image.image = user.avatar.data
+    },
+    setCurrentLoggedUser(state, user) {
         state.personalData.nickname = user.nickname;
         state.personalData.description = user.description;
         state.personalData.dateOfBirth = user.dateOfBirth[2] + "-" + user.dateOfBirth[1] + "-" + user.dateOfBirth[0];

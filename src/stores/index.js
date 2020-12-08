@@ -13,5 +13,6 @@ export const store = new Vuex.Store({
         authStore: AuthStore,
         infoStore: InfoStore,
         meetingsStore: MeetingsStore
-    }
+    },
+
 })

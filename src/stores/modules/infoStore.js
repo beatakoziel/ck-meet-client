@@ -3,7 +3,8 @@ const InfoRepository = Repository.get("info");
 
 // initial state
 const state = () => ({
-    interests: []
+    interests: [],
+    categories: []
 })
 
 // getters
@@ -20,6 +21,14 @@ const actions = {
             return error.response;
         });
     },
+    getCategories({ commit }) {
+        return InfoRepository.getCategories().then(response => {
+            commit('setCategories', response.data)
+            return response;
+        }).catch(error => {
+            return error.response;
+        });
+    },
 }
 
 // mutations
@@ -27,6 +36,9 @@ const mutations = {
     setInterests(state, interests) {
         state.interests = interests
     },
+    setCategories(state, categories) {
+        state.categories = categories
+    }
 }
 
 export default {

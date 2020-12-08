@@ -9,10 +9,7 @@
       <v-spacer></v-spacer>
     </v-toolbar>
     <v-flex row justify-end mt-6 mr-12>
-      <v-btn class="ma-2" outlined color="primary">
-        <v-icon large>mdi-plus</v-icon>
-        Dodaj spotkanie
-      </v-btn>
+<AddMeetingDialog/>
       <v-btn class="ma-2" outlined color="secondary">
         <v-icon large>mdi-filter</v-icon>
         Filtruj
@@ -30,11 +27,13 @@
 
 <script>
 import MeetingCard from "./MeetingCard";
+import AddMeetingDialog from "./AddMeetingDialog"
 import { mapState, mapActions } from "vuex";
 export default {
   name: "App",
   components: {
     MeetingCard,
+    AddMeetingDialog
   },
 
   data: () => ({}),

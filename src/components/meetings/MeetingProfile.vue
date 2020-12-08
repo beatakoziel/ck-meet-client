@@ -12,7 +12,7 @@
           v-else
           height="250px"
           width="250px"
-          :src="'data:image/jpeg;base64,' + currentMeeting.cover"
+          :src="getImgUrl()"
         />
         <hr class="horizontal-line" />
         <p class="display-1 picture-text" mt-5>
@@ -53,34 +53,30 @@
               </template>
               <span>Kategoria</span>
             </v-tooltip>
-            <span class="participants-num">{{ currentMeeting.category }}</span>
+            <span class="participants-num">{{ currentMeeting.category.value }}</span>
           </div>
         </div>
         <p class="title description-title">Opis</p>
         <p class="font">{{ currentMeeting.description }}</p>
       </v-card>
-      <v-container ml-6 mr-0 class="d-flex flex-row-reverse flex-wrap">
-        <v-container style="margin-left: auto">
+      <v-container ml-6 mr-0>
+        <v-container ml-8>
           <p class="title">Organizator wydarzenia</p>
-          <v-container ml-8>
-            <v-img
-              style="float: right"
-              v-if="currentMeeting.host.avatarBytes == null"
-              height="150px"
-              width="150px"
-              src="../../assets/default-image.png"
-            />
-            <v-img
-              style="float: right"
-              v-else
-              height="150px"
-              width="150px"
-              :src="'data:image/jpeg;base64,' + currentMeeting.host.avatarBytes"
-            />
-            <p style="font-size: 20px; padding-top: 125px">
-              {{ currentMeeting.host.nickname }}
-            </p>
-          </v-container>
+          <v-img
+            v-if="currentMeeting.host.avatarBytes == null"
+            height="150px"
+            width="150px"
+            src="../../assets/default-image.png"
+          />
+          <v-img
+            v-else
+            height="150px"
+            width="150px"
+            :src="'data:image/jpeg;base64,' + currentMeeting.host.avatarBytes"
+          />
+          <p style="font-size: 20px">
+            {{ currentMeeting.host.nickname }}
+          </p>
         </v-container>
         <v-container>
           <v-toolbar>
@@ -103,7 +99,11 @@ export default {
   data: () => ({
     ageString: "",
   }),
-  methods: {},
+  methods: {
+    getImgUrl() {
+      return require('../../assets/categories/'+this.currentMeeting.category.key +'.jpg');
+    },
+  },
   computed: {
     ...mapState({
       currentMeeting: (state) => state.meetingsStore.currentMeeting,
@@ -113,9 +113,6 @@ export default {
 };
 </script>
 <style scoped>
-.container {
-  max-width: 40vw;
-}
 i {
   margin-top: 5px;
 }

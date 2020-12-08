@@ -1,37 +1,36 @@
 <template>
-  <v-dialog
-    ref="dialog"
-    v-model="modal"
-    :return-value.sync="date"
-    persistent
-    width="290px"
+  <v-menu
+      v-model="menu2"
+      :close-on-content-click="false"
+      :nudge-right="40"
+      transition="scale-transition"
+      offset-y
+      min-width="290px"
   >
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
-        v-model="personalData.dateOfBirth"
-        label="Data urodzenia"
-        prepend-icon="mdi-calendar"
-        readonly
-        v-bind="attrs"
-        min="1950-01-01"
-        v-on="on"
-        @click="modal = true"
+          v-model="chosenDate"
+          :label="pickerTitle"
+          prepend-icon="mdi-calendar"
+          readonly
+          v-bind="attrs"
+          v-on="on"
       ></v-text-field>
     </template>
-    <v-date-picker v-model="date" scrollable>
-      <v-spacer></v-spacer>
-      <v-btn text color="primary" @click="modal = false"> Cancel </v-btn>
-      <v-btn text color="primary" @click="$refs.dialog.save(date)"> OK </v-btn>
-    </v-date-picker>
-  </v-dialog>
+    <v-date-picker
+        v-model="date"
+        @input="menu2 = false"
+    ></v-date-picker>
+  </v-menu>
 </template>
 
 <script>
 import { mapState } from "vuex";
 export default {
+  props:["pickerTitle","chosenDate"],
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
-    menu: false,
+    menu2: false,
     modal: false,
   }),
   computed: {
