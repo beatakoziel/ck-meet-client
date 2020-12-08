@@ -113,6 +113,9 @@ export default {
 };
 </script>
 <style scoped>
+.container {
+  max-width: 40vw;
+}
 i {
   margin-top: 5px;
 }
