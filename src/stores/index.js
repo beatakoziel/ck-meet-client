@@ -4,6 +4,7 @@ import PeopleStore from './modules/peopleStore'
 import AuthStore from './modules/authStore'
 import InfoStore from './modules/infoStore'
 import MeetingsStore from './modules/meetingsStore'
+import RelationshipStore from './modules/relationshipStore'
 
 Vue.use(Vuex)
 
@@ -12,7 +13,8 @@ export const store = new Vuex.Store({
         peopleStore: PeopleStore,
         authStore: AuthStore,
         infoStore: InfoStore,
-        meetingsStore: MeetingsStore
+        meetingsStore: MeetingsStore,
+        relationshipStore: RelationshipStore
     },
 
 })

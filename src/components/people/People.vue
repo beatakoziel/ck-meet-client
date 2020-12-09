@@ -29,7 +29,7 @@ export default {
 
   data: () => ({}),
   methods: {
-    ...mapActions(["getPeople"]),
+    ...mapActions(["getPeople", "getRelationships"]),
   },
   computed: {
     ...mapState({
@@ -38,6 +38,7 @@ export default {
   },
   created() {
     this.getPeople();
+    this.getRelationships();
   },
 };
 </script>

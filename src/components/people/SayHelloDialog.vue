@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-btn ml-2 @click.stop="dialog = true">
+    <v-btn v-if="!saidHelloAlready()" ml-2 @click.stop="sayHelloToUser()">
       Przywitaj się
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -22,16 +22,16 @@
         <v-card-title class=" headline justify-center">
           <p v-if="personalData.gender==='FEMALE'">Przywitałaś się!</p>
           <p v-if="personalData.gender==='MALE'">Przywitałeś się!</p>
-          <!--<p>Jesteście znajomymi!</p>-->
         </v-card-title>
-          <v-flex row class="justify-center mr-0">
-            <p>
-<!--              <v-icon style="font-size: 200px">mdi-handshake</v-icon>-->
-              <v-icon style="font-size: 200px">mdi-hand</v-icon>
-            </p>
-            <p>Druga osoba musi także się z Tobą przywitać abyście zostali znajomymi.</p>
-<!--            <p>Teraz jesteście znajomymi i możecie się ze sobą skontaktować.</p>-->
-          </v-flex>
+        <v-flex row class="justify-center mr-0">
+          <p>
+            <v-icon style="font-size: 200px">mdi-hand</v-icon>
+          </p>
+          <p v-if="status==='USER_SAID_HELLO'">Już prawie jesteście znajomymi, ale aby nimi</p>
+          <p v-if="status==='USER_SAID_HELLO'">zostać zarówno Ty jak i ten użytkownik musicie się przywitać.</p>
+          <p v-if="status==='BOTH_SAID_HELLO'">Osoba została dodana do grona Twoich znajomych.</p>
+          <p v-if="status==='BOTH_SAID_HELLO'">Teraz możecie się ze sobą skontaktować.</p>
+        </v-flex>
         <v-card-actions>
           <v-spacer></v-spacer>
 
@@ -49,17 +49,41 @@
   </v-row>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   data() {
     return {
       dialog: false,
+      status: null
     }
   },
+  methods: {
+    ...mapActions(["sayHello"]),
+    sayHelloToUser() {
+      this.sayHello(this.currentViewedUser.id)
+          .then((response) => {this.status = response;
+           console.log(this.status)});
+      this.dialog = true;
+    },
+    saidHelloAlready() {
+      let found = false;
+      for (let i = 0; i < this.relationships.length; i++) {
+        if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+          found = true;
+          break;
+        }
+      }
+      return found;
+    }
+
+  },
+
   computed: {
     ...mapState({
+      currentViewedUser: (state) => state.peopleStore.currentUser,
       personalData: (state) => state.peopleStore.personalData,
+      relationships: (state) => state.relationshipStore.relationships
     })
   }
 }

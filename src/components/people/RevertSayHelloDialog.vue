@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-btn ml-2 @click.stop="dialog = true">
+    <v-btn v-if="saidHelloAlready()" ml-2 @click.stop="revertHelloToUser()">
       Cofnij przywitanie
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -10,7 +10,7 @@
           >
         </template>
         <span>Cofnięcie spowoduje usunięcie osoby z grona przywitanych</span>
-<!--        <span>Cofnięcie spowoduje usunięcie osoby z grona znajomych</span>-->
+        <!--        <span>Cofnięcie spowoduje usunięcie osoby z grona znajomych</span>-->
       </v-tooltip>
     </v-btn>
 
@@ -23,16 +23,15 @@
         <v-card-title class=" headline justify-center">
           <p v-if="personalData.gender==='FEMALE'">Cofnęłaś przywitanie!</p>
           <p v-if="personalData.gender==='MALE'">Cofnąłeś przywitanie!</p>
-          <!--<p>Jesteście znajomymi!</p>-->
         </v-card-title>
-          <v-flex row class="justify-center mr-0">
-            <p>
-              <v-icon style="font-size: 200px">mdi-hand-wash</v-icon>
-            </p>
-            <p>Osoba została usunięta z grona przez Ciebie przywitanych.</p>
-            <!--<p style="text-align: center">Osoba została usunięta z grona Twoich znajomych.</p>-->
-            <p>Nie możecie się ze sobą skontaktować.</p>
-          </v-flex>
+        <v-flex row class="justify-center mr-0">
+          <p>
+            <v-icon style="font-size: 200px">mdi-hand-wash</v-icon>
+          </p>
+          <p>Osoba została usunięta z grona przez Ciebie przywitanych.</p>
+          <!--<p style="text-align: center">Osoba została usunięta z grona Twoich znajomych.</p>-->
+          <p>Nie możecie się ze sobą skontaktować.</p>
+        </v-flex>
         <v-card-actions>
           <v-spacer></v-spacer>
 
@@ -50,17 +49,38 @@
   </v-row>
 </template>
 <script>
-import {mapState} from "vuex";
+import {mapActions, mapState} from "vuex";
 
 export default {
   data() {
     return {
       dialog: false,
+      status: null
+    }
+  },
+  methods: {
+    ...mapActions(["revertHello"]),
+    revertHelloToUser() {
+      this.revertHello(this.currentViewedUser.id)
+          .then((response) => this.status = response);
+      this.dialog = true;
+    },
+    saidHelloAlready() {
+      let found = false;
+      for (let i = 0; i < this.relationships.length; i++) {
+        if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+          found = true;
+          break;
+        }
+      }
+      return found;
     }
   },
   computed: {
     ...mapState({
       personalData: (state) => state.peopleStore.personalData,
+      currentViewedUser: (state) => state.peopleStore.currentUser,
+      relationships: (state) => state.relationshipStore.relationships
     })
   }
 }

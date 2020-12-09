@@ -9,7 +9,6 @@
           <v-spacer></v-spacer>
         </v-toolbar>-->
     <v-flex row justify-center mt-10>
-      {{ currentViewedUser.id }}
       <v-container ml-0 mr-16 class="my-6 inner-container">
         <v-img
             v-if="currentViewedUser.avatarBytes == null"
@@ -25,7 +24,7 @@
         />
         <hr class="horizontal-line"/>
         <p class="display-1 picture-text" mt-5>
-          {{ currentViewedUser.nickname }}, {{ currentViewedUser.age }} {{ ageString }}
+          {{ currentViewedUser.nickname }}, {{ currentViewedUser.age }} {{ setAgeString() }}
           <v-tooltip v-if="currentViewedUser.gender === 'FEMALE'" bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon v-bind="attrs" v-on="on" large>mdi-gender-female</v-icon>
@@ -40,8 +39,8 @@
           </v-tooltip>
         </p>
         <v-container class="hello-container" ml-0 mr-0 pl-0 pr-0>
-          <SayHelloDialog/>
           <RevertSayHelloDialog/>
+          <SayHelloDialog/>
           <p class="caption info-caption">
             Jeżeli Ty i ten użytkownik przybijecie sobie piątki wówczas zostanie
             odblokowana możliwość skontaktowania się ze sobą.
@@ -72,16 +71,16 @@
               <v-flex column flex-justify-start flex-align-center>
                 Płeć:
                 <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
-                  <v-icon v-bind="attrs" v-on="on" large>mdi-checkbox-marked-circle-outline</v-icon>
+                  <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   Kobieta
                 </p>
                 <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
-                  <v-icon v-bind="attrs" v-on="on" large>mdi-checkbox-marked-circle-outline</v-icon>
+                  <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   Mężczyzna
                 </p>
                 Wiek:
                 <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
-                  <v-icon v-bind="attrs" v-on="on" large>mdi-checkbox-marked-circle-outline</v-icon>
+                  <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   od {{ currentViewedUser.preferredAgeToMeetFrom }} do {{ currentViewedUser.preferredAgeToMeetTo }} lat
                 </p>
               </v-flex>
@@ -119,15 +118,26 @@ export default {
       var checkList = [0, 1, 5, 6, 7, 8, 9];
       if (checkList.indexOf(lastDigit) > -1) this.ageString = "lat";
       else this.ageString = "lata";
+      return this.ageString;
+    },
+    saidHelloAlready() {
+      let found = false;
+      for (let i = 0; i < this.relationships.length; i++) {
+        if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+          found = true;
+          break;
+        }
+      }
+      return found;
     },
     ...mapActions(["currentUser"]),
   },
   computed: {
     ...mapState({
       currentViewedUser: (state) => state.peopleStore.currentUser,
+      relationships: (state) => state.relationshipStore.relationships
     }),
   },
-
   mounted() {
     this.currentUser();
     this.setAgeString();
