@@ -54,7 +54,7 @@
           <router-link
               :to="{ name: 'MeetingProfile', params: { id: meetingData.id } }"
           >
-            <v-btn color="accent" text @click="setMeeting">Szczegóły</v-btn>
+            <v-btn color="primary" text @click="setMeeting">Szczegóły</v-btn>
           </router-link>
         </v-card-actions>
       </div>
@@ -69,10 +69,15 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex";
+import {mapMutations, mapState} from "vuex";
 export default {
   props: ["meetingData"],
   data: () => ({}),
+  computed: {
+    ...mapState({
+      currentLoggedUser: (state) => state.peopleStore.currentLoggedUser,
+    }),
+  },
   mounted() {
     console.log(this.meetingData);
   },

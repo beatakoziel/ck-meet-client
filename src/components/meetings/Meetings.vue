@@ -8,8 +8,8 @@
       </span>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-flex row justify-center mt-6 mr-12>
-
+    {{currentLoggedUser}}
+    <v-flex row justify-start mt-6 mr-12>
       <v-container>
         <AddMeetingDialog/>
       </v-container>
@@ -44,14 +44,16 @@ export default {
 
   data: () => ({}),
   methods: {
-    ...mapActions(["getMeetings"]),
+    ...mapActions(["getMeetings", "currentUser"]),
   },
   computed: {
     ...mapState({
       meetings: (state) => state.meetingsStore.meetings,
+      currentLoggedUser: (state) => state.peopleStore.currentLoggedUser,
     }),
   },
   created() {
+    this.currentUser();
     this.getMeetings().then((response) => {
       console.log(response);
     });

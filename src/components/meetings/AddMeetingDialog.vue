@@ -94,7 +94,6 @@ export default {
         maxNumOfParticipants: null,
         date: null,
         category: null,
-
       },
       errorMessage: "",
       show: false,

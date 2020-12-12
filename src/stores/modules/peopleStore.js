@@ -5,6 +5,7 @@ const UserRepository = Repository.get("users");
 const getDefaultState = () => ({
     people: [],
     currentUser: null,
+    currentLoggedUser: null,
     personalData: {
         nickname: "",
         description: "",
@@ -94,7 +95,8 @@ const mutations = {
         state.personalizationData.preferredGenderToMeet = user.preferredGenderToMeet
         state.personalizationData.preferredAgeToMeetFrom = user.preferredAgeToMeetFrom
         state.personalizationData.preferredAgeToMeetTo = user.preferredAgeToMeetTo
-        state.image.image = user.avatar.data
+        state.image.image = user.avatar.data,
+        state.currentLoggedUser = user
     },
     resetState() {
         Object.assign(state, getDefaultState())
