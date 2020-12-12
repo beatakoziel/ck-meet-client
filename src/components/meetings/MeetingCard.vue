@@ -1,18 +1,17 @@
 <template>
   <v-card
       class="mx-auto ml-5 mr-5 my-12"
-      min-width="fit-content"
-      max-width="40vw"
+      width="40vw"
+      height="350px"
   >
     <div class="d-flex flex-no-wrap justify-space-between">
       <div>
         <v-card-title class="headline">{{ meetingData.name }}</v-card-title>
         <v-card-text>
-          <div class="d-flex flex-wrap">
             <div class="d-flex flex-no-wrap">
               <v-tooltip bottom>
                 <template v-slot:activator="{ on }">
-                  <v-icon v-on="on" large>mdi-account-multiple-outline</v-icon>
+                  <v-icon style="margin-left: 15px" v-on="on" large>mdi-account-multiple-outline</v-icon>
                 </template>
                 <span>Max liczba uczestników</span>
               </v-tooltip>
@@ -47,9 +46,9 @@
               </v-tooltip>
               <span class="participants-num">{{ meetingData.category.value }}</span>
             </div>
-          </div>
+
         </v-card-text>
-        <v-card-text>{{ meetingData.description }}</v-card-text>
+        <v-card-text  class="description">{{ meetingData.description }}</v-card-text>
 
         <v-card-actions>
           <router-link
@@ -60,8 +59,9 @@
         </v-card-actions>
       </div>
         <v-img
-            height="250px"
-            width="250px"
+            style="margin-left: 20px"
+            height=250px
+            width=250px
             :src="getImgUrl()"
         />
     </div>
@@ -88,13 +88,23 @@ export default {
 };
 </script>
 <style scoped>
+.description {
+  display: block;
+  display: -webkit-box;
+  height: 85px;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 i {
   margin-top: 5px;
 }
 
 .participants-num {
   margin-left: 10px;
-  font-size: 20px;
+  font-size: 17px;
   margin-top: 10px;
 }
 

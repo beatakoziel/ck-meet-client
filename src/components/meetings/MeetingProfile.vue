@@ -3,15 +3,9 @@
     <v-flex row justify-center mt-10>
       <v-card mr-0 color="card" class="meeting-card">
         <v-img
-          v-if="currentMeeting.cover == null"
-          height="250px"
-          width="250px"
-          src="../../assets/default-image.png"
-        />
-        <v-img
-          v-else
-          height="250px"
-          width="250px"
+
+          height="350px"
+          width="350px"
           :src="getImgUrl()"
         />
         <hr class="horizontal-line" />
@@ -137,7 +131,7 @@ a {
 .horizontal-line {
   margin-top: 20px;
   margin-bottom: 20px;
-  width: 250px;
+  width: 350px;
 }
 
 .meeting-card {

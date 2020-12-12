@@ -1,11 +1,11 @@
 <template>
   <v-app-bar
-    app
-    absolute
-    color="grey"
-    dark
-    prominent
-    src="../../assets/navbar-pic4.jpg"
+      app
+      absolute
+      color="grey"
+      dark
+      prominent
+      src="../../assets/navbar-pic4.jpg"
   >
     <template v-slot:img="{ props }">
       <v-img v-bind="props" class="image"></v-img>
@@ -15,10 +15,10 @@
 
     <v-spacer></v-spacer>
     <v-switch
-      v-model="$vuetify.theme.dark"
-      inset
-      persistent-hint
-      class="mt-3"
+        v-model="$vuetify.theme.dark"
+        inset
+        persistent-hint
+        class="mt-3"
     ></v-switch>
     <v-menu offset-y transition="slide-y-transition" bottom right>
       <template v-slot:activator="{ on, attrs }">
@@ -29,13 +29,15 @@
 
       <v-list>
         <v-list-item
-          v-if="registrationStatus == 'COMPLETED'"
-          @click="$router.push({ name: 'ProfileSettings' })"
+            v-if="registrationStatus == 'COMPLETED'"
+            @click="$router.push({ name: 'ProfileSettings' })"
         >
           <v-list-item-title>Ustawienia konta</v-list-item-title>
         </v-list-item>
-        <v-list-item v-if="registrationStatus == 'COMPLETED'">
-          <v-list-item-title>Kontakty</v-list-item-title>
+        <v-list-item v-if="registrationStatus == 'COMPLETED'"
+                     @click="$router.push({ name: 'Contacts' })"
+        >
+          <v-list-item-title>Przywitania</v-list-item-title>
         </v-list-item>
         <v-list-item v-if="registrationStatus == 'COMPLETED'">
           <v-list-item-title>Spotkania</v-list-item-title>
@@ -56,7 +58,8 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import {mapState, mapMutations, mapActions} from "vuex";
+
 export default {
   methods: {
     ...mapMutations(["logout", "resetState"]),
@@ -64,7 +67,7 @@ export default {
     logoutUser() {
       this.logout();
       this.resetState();
-      this.$router.push({ name: "Auth" });
+      this.$router.push({name: "Auth"});
     },
   },
   computed: {

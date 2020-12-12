@@ -27,13 +27,34 @@
                 :rules="[(v) => !!v || 'Pole wymagane']"
                 required
             ></v-textarea>
-            <DatePicker :chosen-date="meetingData.date" picker-title="Data spotkania"/>
+            <v-menu
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                    v-model="meetingData.date"
+                    label="Data spotkania"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                  v-model="meetingData.date"
+                  @input="menu2 = false"
+              ></v-date-picker>
+            </v-menu>
             <v-text-field
                 v-model="meetingData.maxNumOfParticipants"
                 single-line
                 type="number"
                 label="Maksymalna liczba uczestników**"
-                :rules="participantsNumRules"
             />
             <v-select
                 v-model="meetingData.category"
@@ -51,7 +72,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="accent" text @click="dialog = false">Zamknij</v-btn>
-          <v-btn color="accent" text @click="addMeeting()">Dodaj spotkanie</v-btn>
+          <v-btn color="accent" text @click="addNewMeeting()">Dodaj spotkanie</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,12 +80,14 @@
 </template>
 
 <script>
-import DatePicker from "../common/DatePicker";
 import {mapState, mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   data() {
     return {
+      menu2: false,
+      modal: false,
+      meetingType: "meeting",
       meetingData: {
         name: "",
         description: "",
@@ -73,19 +96,12 @@ export default {
         category: null,
 
       },
-      participantsNumRules: [
-        v => !!v || 'Pole wymagane',
-        v => (Number(v) < 2) || 'Maksymalna liczba uczestników powinna być pomiędzy 2 a 20',
-        v => (Number(v) > 20) || 'Maksymalna liczba uczestników powinna być pomiędzy 2 a 20'
-      ],
       errorMessage: "",
       show: false,
       dialog: false,
     };
   },
-  components: {
-    DatePicker,
-  },
+  components: {},
   mounted() {
     this.getCategories();
   },
@@ -98,31 +114,19 @@ export default {
     ...mapGetters(["isAuthenticated"]),
     ...mapMutations(["logout", "resetState"]),
     ...mapActions(["addMeeting", "getCategories"]),
-    addMeeting() {
-      console.log(this.categories);
-/*      if (this.checkProperties(this.meetingData)) {
-        this.addMeeting(this.meetingData).then((response) => {
-          if (response.status === "200") {
-            this.dialog = false;
-          } else if (response.status === "403") {
-            this.logout();
-            this.resetState();
-            this.$router.push({name: "Auth"});
-          } else {
-            this.errorMessage = "Upewnij się, że wprowadzone dane są prawidłowe.";
-          }
-        });
-      } else {
-        this.errorMessage = "Uzupełnij wszystkie pola";
-      }*/
+    addNewMeeting() {
+      this.addMeeting(this.meetingData).then((response) => {
+        if (response.status === "200") {
+          this.dialog = false;
+        } else if (response.status === "403") {
+          this.logout();
+          this.resetState();
+          this.$router.push({name: "Auth"});
+        } else {
+          this.errorMessage = "Upewnij się, że wprowadzone dane są prawidłowe.";
+        }
+      });
     },
-    checkProperties(obj) {
-      for (const property in obj) {
-        if (obj[property] !== null && obj[property] !== "")
-          return false;
-      }
-      return true;
-    }
   },
 };
 </script>

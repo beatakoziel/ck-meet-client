@@ -26,6 +26,10 @@ client.interceptors.request.use((config) => {
     }
     return config
 }, (err) => {
+    if (err.response.status == 403) {
+        authStore.mutations.logout();
+        router.push({ name: "Auth" });
+    }
     return Promise.reject(err)
 })
 

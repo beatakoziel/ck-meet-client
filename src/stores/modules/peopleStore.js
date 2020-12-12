@@ -30,7 +30,6 @@ const state = getDefaultState()
 
 // getters
 const getters = {
-
 }
 
 // actions

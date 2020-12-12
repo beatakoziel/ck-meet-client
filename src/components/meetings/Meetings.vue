@@ -8,18 +8,23 @@
       </span>
       <v-spacer></v-spacer>
     </v-toolbar>
-    <v-flex row justify-end mt-6 mr-12>
-<AddMeetingDialog/>
-      <v-btn class="ma-2" outlined color="secondary">
-        <v-icon large>mdi-filter</v-icon>
-        Filtruj
-      </v-btn>
+    <v-flex row justify-center mt-6 mr-12>
+
+      <v-container>
+        <AddMeetingDialog/>
+      </v-container>
+      <v-container>
+        <v-btn class="ma-2" outlined color="secondary">
+          <v-icon large>mdi-filter</v-icon>
+          Filtruj
+        </v-btn>
+      </v-container>
     </v-flex>
     <v-flex row justify-center ml-0>
       <MeetingCard
-        v-for="meeting in meetings"
-        :key="meeting.id"
-        :meetingData="meeting"
+          v-for="meeting in meetings"
+          :key="meeting.id"
+          :meetingData="meeting"
       />
     </v-flex>
   </div>
@@ -28,7 +33,8 @@
 <script>
 import MeetingCard from "./MeetingCard";
 import AddMeetingDialog from "./AddMeetingDialog"
-import { mapState, mapActions } from "vuex";
+import {mapState, mapActions} from "vuex";
+
 export default {
   name: "App",
   components: {
@@ -56,6 +62,7 @@ export default {
 span {
   margin-left: 5px;
 }
+
 header {
   margin-top: 20px;
 }

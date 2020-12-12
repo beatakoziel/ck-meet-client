@@ -19,6 +19,12 @@ const actions = {
             return response;
         })
     },
+    addMeeting({ dispatch }, meeting) {
+        return MeetingsRepository.add(meeting).then(response => {
+            dispatch('getMeetings');
+            return response.data;
+        })
+    }
 }
 
 // mutations
