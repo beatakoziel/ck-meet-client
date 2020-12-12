@@ -56,10 +56,10 @@ export default {
     ...mapActions(["deleteMeeting", "getCategories"]),
     deleteThisMeeting() {
       this.deleteMeeting(this.meetingId).then((response) => {
-        if (response.status === "200") {
+        if (response.status == "200") {
           this.dialog = false;
           this.$router.push({ name: 'Meetings' })
-        } else if (response.status === "403") {
+        } else if (response.status == "403") {
           this.logout();
           this.resetState();
           this.$router.push({name: "Auth"});

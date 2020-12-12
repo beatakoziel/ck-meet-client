@@ -55,7 +55,8 @@ export default {
     ...mapActions(["deleteMeeting", "getCategories"]),
     deleteThisMeeting() {
       this.deleteMeeting(this.meetingId).then((response) => {
-        if (response.status === "200") {
+        console.log(response)
+        if (response.status == "200") {
           this.dialog = false;
           this.$router.push({ name: 'Meetings' })
         } else if (response.status === "403") {

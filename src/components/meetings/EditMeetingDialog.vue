@@ -117,10 +117,11 @@ export default {
     ...mapMutations(["logout", "resetState"]),
     ...mapActions(["editMeeting", "getCategories"]),
     editThisMeeting() {
-      this.editMeeting(this.meetingData).then((response) => {
-        if (response.status === "200") {
+      let editObject = {meetingId: this.currentMeeting.id, meeting: this.meetingData};
+      this.editMeeting(editObject).then((response) => {
+        if (response.status == "200") {
           this.dialog = false;
-        } else if (response.status === "403") {
+        } else if (response.status == "403") {
           this.logout();
           this.resetState();
           this.$router.push({name: "Auth"});

@@ -8,10 +8,11 @@ export default {
     add(meeting) {
         return Client.post(`${resource}`, meeting);
     },
-    edit(id, meeting) {
+    update(id, meeting) {
+        console.log(meeting)
         return Client.put(`${resource}/${id}`, meeting);
     },
-    delete(id, meeting) {
-        return Client.delete(`${resource}/${id}`, meeting);
+    delete(id) {
+        return Client.delete(`${resource}/${id}`);
     }
 };

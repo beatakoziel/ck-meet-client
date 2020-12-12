@@ -1,4 +1,5 @@
 import Repository from "../../repositories/repositoryFactory"
+
 const MeetingsRepository = Repository.get("meetings");
 
 // initial state
@@ -8,33 +9,32 @@ const state = () => ({
 })
 
 // getters
-const getters = {
-}
+const getters = {}
 
 // actions
 const actions = {
-    getMeetings({ commit }) {
+    getMeetings({commit}) {
         return MeetingsRepository.get().then(response => {
             commit('setMeetings', response.data)
             return response;
         })
     },
-    addMeeting({ dispatch }, meeting) {
+    addMeeting({dispatch}, meeting) {
         return MeetingsRepository.add(meeting).then(response => {
             dispatch('getMeetings');
-            return response.data;
+            return response;
         })
     },
-    editMeeting({ dispatch },meetingId, meeting) {
-        return MeetingsRepository.edit(meetingId, meeting).then(response => {
+    editMeeting({dispatch}, {meetingId, meeting}) {
+        return MeetingsRepository.update(meetingId, meeting).then(response => {
             dispatch('getMeetings');
-            return response.data;
+            return response;
         })
     },
-    deleteMeeting({ dispatch },meetingId) {
+    deleteMeeting({dispatch}, meetingId) {
         return MeetingsRepository.delete(meetingId).then(response => {
             dispatch('getMeetings');
-            return response.data;
+            return response;
         })
     }
 }

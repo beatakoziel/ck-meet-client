@@ -117,7 +117,8 @@ export default {
     ...mapActions(["addMeeting", "getCategories"]),
     addNewMeeting() {
       this.addMeeting(this.meetingData).then((response) => {
-        if (response.status === "200") {
+        console.log(response.status)
+        if (response.status == "201") {
           this.dialog = false;
         } else if (response.status === "403") {
           this.logout();
