@@ -121,6 +121,7 @@ export default {
       this.editMeeting(editObject).then((response) => {
         if (response.status == "200") {
           this.dialog = false;
+          this.$router.push({ name: 'Meetings' })
         } else if (response.status == "403") {
           this.logout();
           this.resetState();
