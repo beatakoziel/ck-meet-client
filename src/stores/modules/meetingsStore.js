@@ -24,6 +24,18 @@ const actions = {
             dispatch('getMeetings');
             return response.data;
         })
+    },
+    editMeeting({ dispatch },meetingId, meeting) {
+        return MeetingsRepository.edit(meetingId, meeting).then(response => {
+            dispatch('getMeetings');
+            return response.data;
+        })
+    },
+    deleteMeeting({ dispatch },meetingId) {
+        return MeetingsRepository.delete(meetingId).then(response => {
+            dispatch('getMeetings');
+            return response.data;
+        })
     }
 }
 

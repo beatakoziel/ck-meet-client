@@ -96,7 +96,7 @@ export default {
 .description {
   display: block;
   display: -webkit-box;
-  height: 85px;
+  height: 80px;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;

@@ -1,16 +1,15 @@
 <template>
-  <v-container>
+  <div>
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="600px">
         <template v-slot:activator="{ on, attrs }">
           <v-btn class="ma-2" outlined color="primary" v-bind="attrs" v-on="on">
-            <v-icon large>mdi-plus</v-icon>
-            Dodaj spotkanie
+            Edytuj
           </v-btn>
         </template>
         <v-card>
           <v-card-title>
-            <span class="headline">Dodaj nowe spotkanie</span>
+            <span class="headline">Edytuj spotkanie</span>
           </v-card-title>
           <v-card-text>
             <v-container>
@@ -73,29 +72,30 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="accent" text @click="dialog = false">Zamknij</v-btn>
-            <v-btn color="accent" text @click="addNewMeeting()">Dodaj spotkanie</v-btn>
+            <v-btn color="accent" text @click="editThisMeeting()">Edytuj spotkanie</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
 import {mapState, mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
+  props: ["currentMeeting"],
   data() {
     return {
       menu2: false,
       modal: false,
       meetingType: "meeting",
       meetingData: {
-        name: "",
-        description: "",
-        maxNumOfParticipants: null,
-        date: null,
-        category: null,
+        name: this.currentMeeting.name,
+        description: this.currentMeeting.description,
+        maxNumOfParticipants: this.currentMeeting.maxNumOfParticipants,
+        date: this.currentMeeting.date,
+        category: this.currentMeeting.category,
       },
       errorMessage: "",
       show: false,
@@ -109,14 +109,15 @@ export default {
   computed: {
     ...mapState({
       categories: (state) => state.infoStore.categories,
+      //currentMeeting: (state) => state.meetingsStore.currentMeeting,
     }),
   },
   methods: {
     ...mapGetters(["isAuthenticated"]),
     ...mapMutations(["logout", "resetState"]),
-    ...mapActions(["addMeeting", "getCategories"]),
-    addNewMeeting() {
-      this.addMeeting(this.meetingData).then((response) => {
+    ...mapActions(["editMeeting", "getCategories"]),
+    editThisMeeting() {
+      this.editMeeting(this.meetingData).then((response) => {
         if (response.status === "200") {
           this.dialog = false;
         } else if (response.status === "403") {

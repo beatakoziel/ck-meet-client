@@ -8,17 +8,9 @@
       </span>
       <v-spacer></v-spacer>
     </v-toolbar>
-    {{currentLoggedUser}}
-    <v-flex row justify-start mt-6 mr-12>
-      <v-container>
+    <v-flex mt-5 justify-center>
         <AddMeetingDialog/>
-      </v-container>
-      <v-container>
-        <v-btn class="ma-2" outlined color="secondary">
-          <v-icon large>mdi-filter</v-icon>
-          Filtruj
-        </v-btn>
-      </v-container>
+        <FilterMeetings/>
     </v-flex>
     <v-flex row justify-center ml-0>
       <MeetingCard
@@ -34,10 +26,12 @@
 import MeetingCard from "./MeetingCard";
 import AddMeetingDialog from "./AddMeetingDialog"
 import {mapState, mapActions} from "vuex";
+import FilterMeetings from "@/components/meetings/FilterMeetings";
 
 export default {
   name: "App",
   components: {
+    FilterMeetings,
     MeetingCard,
     AddMeetingDialog
   },

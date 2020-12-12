@@ -57,16 +57,16 @@
       </v-card>
       <v-container ml-6 mr-0>
         <v-container  v-if="currentMeeting.host.id===currentLoggedUser.id" ml-6>
-<!--          <hr/>-->
             <v-flex mt-5 mb-5 row justify-center>
-              <v-btn class="ml-2" outlined color="primary">Edytuj</v-btn>
-              <v-btn class="ml-3"  outlined color="secondary">Usuń</v-btn>
+              <EditMeetingDialog :current-meeting="currentMeeting"/>
+              <DeleteMeetingDialog class="ml-3" :meeting-id="currentMeeting.id" :meeting-name="currentMeeting.name"/>
             </v-flex>
           <hr/>
             <v-spacer></v-spacer>
         </v-container>
         <v-container ml-8>
           <p class="title">Organizator wydarzenia</p>
+          <div >
           <v-img
               v-if="currentMeeting.host.avatarBytes == null"
               height="150px"
@@ -79,9 +79,17 @@
               width="150px"
               :src="'data:image/jpeg;base64,' + currentMeeting.host.avatarBytes"
           />
-          <p style="font-size: 20px">
+          </div>
+          <p v-if="currentMeeting.host.id===currentLoggedUser.id" style="font-size: 20px">
+            Ty
+          </p>
+          <p v-else style="font-size: 20px">
             {{ currentMeeting.host.nickname }}
           </p>
+          <p class="title">Uczestnicy wydarzenia</p>
+          <v-container v-if="!currentMeeting.participants.length">
+            <v-icon color="primary" large>mdi-information-outline</v-icon> Brak
+          </v-container>
         </v-container>
 
       </v-container>
@@ -91,6 +99,8 @@
 
 <script>
 import {mapState} from "vuex";
+import EditMeetingDialog from "@/components/meetings/EditMeetingDialog";
+import DeleteMeetingDialog from "@/components/meetings/DeleteMeetingDialog";
 
 export default {
   data: () => ({
@@ -100,6 +110,10 @@ export default {
     getImgUrl() {
       return require('../../assets/categories/' + this.currentMeeting.category.key + '.jpg');
     },
+  },
+  components:{
+    EditMeetingDialog,
+    DeleteMeetingDialog
   },
   computed: {
     ...mapState({
