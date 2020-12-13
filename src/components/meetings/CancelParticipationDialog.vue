@@ -1,11 +1,11 @@
 <template>
   <v-row>
     <v-btn outlined large color="primary" v-if="participateAlready()" class="ml-3" @click.stop="cancelParticipationInMeeting()">
-      Cofnij przywitanie
+      Cofnij wzięcie udziału
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
           <v-icon style="margin-left: 5px;" class="margin-icon" v-bind="attrs" v-on="on"
-          >mdi-hand-wash
+          >mdi-account-multiple-minus-outline
           </v-icon
           >
         </template>
@@ -21,16 +21,16 @@
     >
       <v-card>
         <v-card-title class=" headline justify-center">
-          <p v-if="personalData.gender==='FEMALE'">Cofnęłaś przywitanie!</p>
-          <p v-if="personalData.gender==='MALE'">Cofnąłeś przywitanie!</p>
+          <p v-if="personalData.gender==='FEMALE'">Wycofałaś swój udział w wydarzeniu!</p>
+          <p v-if="personalData.gender==='MALE'">Wycofałeś swój udział w wydarzeniu!</p>
         </v-card-title>
         <v-flex row class="justify-center mr-0">
           <p>
-            <v-icon style="font-size: 200px">mdi-hand-wash</v-icon>
+            <v-icon style="font-size: 200px">mdi-account-multiple-minus-outline</v-icon>
           </p>
-          <p>Osoba została usunięta z grona przez Ciebie przywitanych.</p>
+          <p v-if="personalData.gender==='FEMALE'">Nie będziesz mógła śledzić dyskusji wydarzenia.</p>
           <!--<p style="text-align: center">Osoba została usunięta z grona Twoich znajomych.</p>-->
-          <p>Nie możecie się ze sobą skontaktować.</p>
+          <p v-if="personalData.gender==='MALE'">Nie będziesz mógła śledzić dyskusji wydarzenia.</p>
         </v-flex>
         <v-card-actions>
           <v-spacer></v-spacer>
