@@ -20,5 +20,11 @@ export default {
     },
     cancelParticipation(id) {
         return Client.post(`${resource}/${id}/cancel`);
+    },
+    addComment(id, content) {
+        return Client.post(`${resource}/${id}/comment`, content);
+    },
+    deleteComment(id, content) {
+        return Client.delete(`${resource}/${id}/comment`, content);
     }
 };

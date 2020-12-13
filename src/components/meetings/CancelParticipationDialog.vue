@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-btn outlined large color="primary" v-if="participateAlready()" class="ml-3" @click.stop="cancelParticipationInMeeting()">
+    <v-btn outlined large color="primary" v-if="participateAlready()" class=" mb-3" @click.stop="cancelParticipationInMeeting()">
       Cofnij wzięcie udziału
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
