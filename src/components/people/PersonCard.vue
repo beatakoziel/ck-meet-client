@@ -12,7 +12,7 @@
 
     <v-card-actions>
       <router-link :to="{ name: 'Profile', params: { id: userData.id, userData: userData} }">
-        <v-btn color="accent" text @click="setUser">Pokaż profil</v-btn>
+        <v-btn outlined color="accent" @click="setUser">Pokaż profil</v-btn>
       </router-link>
     </v-card-actions>
   </v-card>
@@ -48,7 +48,7 @@ export default {
 .v-card__text {
   display: block;
   display: -webkit-box;
-  height: 90px;
+  height: 85px;
 
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;

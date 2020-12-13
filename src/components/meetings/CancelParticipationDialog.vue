@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-btn outlined large color="primary" v-if="saidHelloAlready()" class="ml-3" @click.stop="revertHelloToUser()">
+    <v-btn outlined large color="primary" v-if="participateAlready()" class="ml-3" @click.stop="cancelParticipationInMeeting()">
       Cofnij przywitanie
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
@@ -59,16 +59,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["revertHello"]),
-    revertHelloToUser() {
-      this.revertHello(this.currentViewedUser.id)
+    ...mapActions(["cancelParticipation"]),
+    cancelParticipationInMeeting() {
+      this.cancelParticipation(this.currentViewedMeeting.id)
           .then((response) => this.status = response);
       this.dialog = true;
     },
-    saidHelloAlready() {
+    participateAlready() {
       let found = false;
-      for (let i = 0; i < this.relationships.length; i++) {
-        if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+      for (let i = 0; i < this.currentViewedMeeting.participants.length; i++) {
+        if (this.currentViewedMeeting.participants[i].id === this.currentLoggedUser.id) {
           found = true;
           break;
         }
@@ -78,8 +78,9 @@ export default {
   },
   computed: {
     ...mapState({
+      currentLoggedUser: (state) => state.peopleStore.currentLoggedUser,
+      currentViewedMeeting: (state) => state.meetingsStore.currentMeeting,
       personalData: (state) => state.peopleStore.personalData,
-      currentViewedUser: (state) => state.peopleStore.currentUser,
       relationships: (state) => state.relationshipStore.relationships
     })
   }

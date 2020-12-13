@@ -1,15 +1,15 @@
 <template>
   <v-row>
-    <v-btn outlined large color="primary" v-if="!saidHelloAlready()" class="ml-3" @click.stop="sayHelloToUser()">
-      Przywitaj się
+    <v-btn outlined large color="primary" v-if="!participateAlready()" class="ml-3 mb-3" @click.stop="participateInMeeting()">
+      Weź udział
       <v-tooltip bottom>
         <template v-slot:activator="{ on, attrs }">
-          <v-icon class="margin-icon" v-bind="attrs" v-on="on"
-          >mdi-hand-right
+          <v-icon style="margin-left: 5px;" v-bind="attrs" v-on="on"
+          >mdi-account-multiple-plus-outline
           </v-icon
           >
         </template>
-        <span>Przywitaj się!</span>
+        <span>Weź udział w spotkaniu</span>
       </v-tooltip>
     </v-btn>
 
@@ -20,22 +20,17 @@
     >
       <v-card>
         <v-card-title class=" headline justify-center">
-          <p v-if="personalData.gender==='FEMALE'">Przywitałaś się!</p>
-          <p v-if="personalData.gender==='MALE'">Przywitałeś się!</p>
+          <p v-if="personalData.gender==='FEMALE'">Wzięłaś udział w spotkaniu!</p>
+          <p v-if="personalData.gender==='MALE'">Wziąłeś udział w spotkaniu!</p>
         </v-card-title>
         <v-flex row class="justify-center mr-0">
           <p>
-            <v-icon style="font-size: 200px">mdi-hand</v-icon>
+            <v-icon style="font-size: 200px">mdi-account-multiple-plus-outline</v-icon>
           </p>
-          <p v-if="status==='USER_SAID_HELLO'">Już prawie jesteście znajomymi, ale aby nimi</p>
-          <p v-if="status==='USER_SAID_HELLO'">zostać zarówno Ty jak i ten użytkownik musicie się przywitać.</p>
-          <p v-if="status==='BOTH_SAID_HELLO'">Osoba została dodana do grona Twoich znajomych.</p>
-          <p v-if="status==='BOTH_SAID_HELLO'">Teraz możecie się ze sobą skontaktować.</p>
+          <p>Teraz możesz brać udział w dyskusji spotkania.</p>
         </v-flex>
         <v-card-actions>
           <v-spacer></v-spacer>
-
-
           <v-btn
               color="primary"
               text
@@ -59,17 +54,17 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["sayHello"]),
-    sayHelloToUser() {
-      this.sayHello(this.currentViewedUser.id)
+    ...mapActions(["participate"]),
+    participateInMeeting() {
+      this.participate(this.currentViewedMeeting.id)
           .then((response) => {this.status = response;
            console.log(this.status)});
       this.dialog = true;
     },
-    saidHelloAlready() {
+    participateAlready() {
       let found = false;
-      for (let i = 0; i < this.relationships.length; i++) {
-        if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+      for (let i = 0; i < this.currentViewedMeeting.participants.length; i++) {
+        if (this.currentViewedMeeting.participants[i].id === this.currentLoggedUser.id) {
           found = true;
           break;
         }
@@ -81,10 +76,17 @@ export default {
 
   computed: {
     ...mapState({
-      currentViewedUser: (state) => state.peopleStore.currentUser,
+      currentLoggedUser: (state) => state.peopleStore.currentLoggedUser,
+      currentViewedMeeting: (state) => state.meetingsStore.currentMeeting,
       personalData: (state) => state.peopleStore.personalData,
       relationships: (state) => state.relationshipStore.relationships
     })
   }
 }
 </script>
+<style scoped>
+.margin-icon {
+  margin-left: 5px;
+  margin-bottom: 10px;
+}
+</style>

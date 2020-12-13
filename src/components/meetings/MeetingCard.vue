@@ -48,13 +48,13 @@
             </div>
 
         </v-card-text>
-        <v-card-text  class="description">{{ meetingData.description }}</v-card-text>
+        <v-card-text style="margin-left: 15px; font-size: 18px"  class="description">{{ meetingData.description }}</v-card-text>
 
-        <v-card-actions>
+        <v-card-actions style="margin-left: 15px;">
           <router-link
               :to="{ name: 'MeetingProfile', params: { id: meetingData.id } }"
           >
-            <v-btn color="primary" text @click="setMeeting">Szczegóły</v-btn>
+            <v-btn outlined color="primary" @click="setMeeting">Szczegóły</v-btn>
           </router-link>
         </v-card-actions>
       </div>
@@ -109,7 +109,7 @@ i {
 
 .participants-num {
   margin-left: 10px;
-  font-size: 17px;
+  font-size: 18px;
   margin-top: 10px;
 }
 

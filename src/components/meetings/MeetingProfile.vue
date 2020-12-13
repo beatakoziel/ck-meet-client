@@ -54,6 +54,8 @@
         </div>
         <p class="title description-title">Opis</p>
         <p class="font">{{ currentMeeting.description }}</p>
+        <ParticipateDialog/>
+        <CancelParticipationDialog/>
       </v-card>
       <v-container ml-6 mr-0>
         <v-container  v-if="currentMeeting.host.id===currentLoggedUser.id" ml-6>
@@ -101,6 +103,8 @@
 import {mapState} from "vuex";
 import EditMeetingDialog from "@/components/meetings/EditMeetingDialog";
 import DeleteMeetingDialog from "@/components/meetings/DeleteMeetingDialog";
+import ParticipateDialog from "@/components/meetings/ParticipateDialog";
+import CancelParticipationDialog from "@/components/meetings/CancelParticipationDialog";
 
 export default {
   data: () => ({
@@ -113,7 +117,9 @@ export default {
   },
   components:{
     EditMeetingDialog,
-    DeleteMeetingDialog
+    DeleteMeetingDialog,
+    ParticipateDialog,
+    CancelParticipationDialog
   },
   computed: {
     ...mapState({

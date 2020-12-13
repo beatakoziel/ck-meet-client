@@ -36,6 +36,20 @@ const actions = {
             dispatch('getMeetings');
             return response;
         })
+    },
+    participate({dispatch, commit}, meetingId) {
+        return MeetingsRepository.participate(meetingId).then(response => {
+            dispatch('getMeetings');
+            commit("setCurrentViewedMeeting", response.data);
+            return response;
+        })
+    },
+    cancelParticipation({dispatch, commit}, meetingId) {
+        return MeetingsRepository.cancelParticipation(meetingId).then(response => {
+            dispatch('getMeetings');
+            commit("setCurrentViewedMeeting", response.data);
+            return response;
+        })
     }
 }
 

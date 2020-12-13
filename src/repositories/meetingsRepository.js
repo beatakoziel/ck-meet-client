@@ -14,5 +14,11 @@ export default {
     },
     delete(id) {
         return Client.delete(`${resource}/${id}`);
+    },
+    participate(id) {
+        return Client.post(`${resource}/${id}/participate`);
+    },
+    cancelParticipation(id) {
+        return Client.post(`${resource}/${id}/cancel`);
     }
 };
