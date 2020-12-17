@@ -1,4 +1,5 @@
 import Repository from "../../repositories/repositoryFactory"
+
 const UserRepository = Repository.get("users");
 
 // initial state
@@ -30,23 +31,31 @@ const getDefaultState = () => ({
 const state = getDefaultState()
 
 // getters
-const getters = {
-}
+const getters = {}
 
 // actions
 const actions = {
-    getPeople({ commit }) {
+    getPeople({commit}) {
         UserRepository.get().then(res => {
             commit('setPeople', res.data)
         });
     },
-    currentUser({ commit }) {
+    currentUser({commit}) {
         UserRepository.currentUser()
             .then(res => {
                 commit('setCurrentLoggedUser', res.data)
             });
     },
-    registerPersonalData({ state }) {
+    deleteAccount() {
+        return UserRepository.deleteAccount()
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                return error.response;
+            });
+    },
+    registerPersonalData({state}) {
         return UserRepository.registerPersonalData(state.personalData)
             .then(response => {
                 return response.data;
@@ -55,7 +64,7 @@ const actions = {
                 return error.response;
             });
     },
-    registerPersonalizationData({ state }) {
+    registerPersonalizationData({state}) {
         return UserRepository.registerPersonalizationData(state.personalizationData)
             .then(response => {
                 return response.data;
@@ -64,7 +73,7 @@ const actions = {
                 return error.response;
             });
     },
-    uploadImage({ state }) {
+    uploadImage({state}) {
         const fd = new FormData();
         fd.append('image', state.image.image)
         return UserRepository.uploadImage(fd);
@@ -86,7 +95,7 @@ const mutations = {
     setCurrentLoggedUser(state, user) {
         state.personalData.nickname = user.nickname;
         state.personalData.description = user.description;
-        state.personalData.dateOfBirth = user.dateOfBirth[2] + "-" + user.dateOfBirth[1] + "-" + user.dateOfBirth[0];
+        state.personalData.dateOfBirth = user.dateOfBirth;
         state.personalData.email = user.contactData.email;
         state.personalData.phoneNumber = user.contactData.phoneNumber
         state.personalData.linkToFacebookProfile = user.contactData.linkToFacebookProfile
@@ -95,7 +104,7 @@ const mutations = {
         state.personalizationData.preferredGenderToMeet = user.preferredGenderToMeet
         state.personalizationData.preferredAgeToMeetFrom = user.preferredAgeToMeetFrom
         state.personalizationData.preferredAgeToMeetTo = user.preferredAgeToMeetTo
-        state.image.image = user.avatar.data,
+        state.image.image = user.avatar.data
         state.currentLoggedUser = user
     },
     resetState() {

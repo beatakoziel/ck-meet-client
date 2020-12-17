@@ -6,10 +6,18 @@
           Zyskaj nowych znajomych z Twojego miasta i okolicy.
         </div>
       </v-flex>
-      <v-flex row justify-center ml-0 mb-5>
+<!--      <v-flex row justify-center ml-0 mb-5>
         <p class="body-1">
           Przeglądaj profile, szukaj wspólnych zainteresowań.
         </p>
+      </v-flex>-->
+    </v-container>
+    <v-container>
+      <v-flex row justify-center ml-0 mt-10>
+        <div style="color: #6199bf;" class="display-1">
+          Najlepsze dopasowania
+        </div>
+
       </v-flex>
     </v-container>
     <v-flex row justify-center ml-0>

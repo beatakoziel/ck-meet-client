@@ -1,4 +1,5 @@
 import Client from './axiosClient';
+
 const resource = '/users';
 
 export default {
@@ -10,6 +11,9 @@ export default {
     },
     create(payload) {
         return Client.post(`${resource}`, payload);
+    },
+    deleteAccount() {
+        return Client.delete(`${resource}`);
     },
     registerPersonalData(payload) {
         return Client.put(`${resource}/data`, payload);

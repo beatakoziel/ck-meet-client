@@ -8,7 +8,29 @@
         label="Nazwa użytkownika"
         required
       ></v-text-field>
-      <DatePicker />
+      <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+              v-model="personalData.dateOfBirth"
+              label="Data urodzenia"
+              prepend-icon="mdi-calendar"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+            v-model="personalData.dateOfBirth"
+            @input="menu2 = false"
+        ></v-date-picker>
+      </v-menu>
       <v-textarea
         v-model="personalData.description"
         label="Opis"
@@ -56,11 +78,12 @@
 </template>
 
 <script>
-import DatePicker from "../common/DatePicker";
 import { mapState } from "vuex";
 export default {
   data() {
     return {
+      menu2: false,
+      modal: false,
       selected: [],
       checkbox: null,
       items: [
@@ -83,9 +106,6 @@ export default {
     ...mapState({
       personalData: (state) => state.peopleStore.personalData,
     }),
-  },
-  components: {
-    DatePicker,
   },
 };
 </script>
