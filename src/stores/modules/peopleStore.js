@@ -58,7 +58,7 @@ const actions = {
     registerPersonalData({state}) {
         return UserRepository.registerPersonalData(state.personalData)
             .then(response => {
-                return response.data;
+                return response;
             })
             .catch(error => {
                 return error.response;
@@ -104,7 +104,7 @@ const mutations = {
         state.personalizationData.preferredGenderToMeet = user.preferredGenderToMeet
         state.personalizationData.preferredAgeToMeetFrom = user.preferredAgeToMeetFrom
         state.personalizationData.preferredAgeToMeetTo = user.preferredAgeToMeetTo
-        state.image.image = user.avatar.data
+        state.image.image = user.avatar==null? null : user.avatar.data
         state.currentLoggedUser = user
     },
     resetState() {

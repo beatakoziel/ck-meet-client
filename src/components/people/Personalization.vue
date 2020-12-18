@@ -15,7 +15,7 @@
             v-for="interest in chunk"
             :key="interest.key"
             v-model="personalizationData.interests"
-            :value="interest.key"
+            :value="interest"
             :label="interest.value"
         ></v-checkbox>
       </v-container>

@@ -10,9 +10,12 @@
   "dependencies": {
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "izitoast": "^1.4.0",
     "lodash": "^4.17.20",
+    "mini-toastr": "^0.8.1",
     "vue": "^2.6.11",
     "vue-fontawesome": "0.0.2",
+    "vue-notifications": "^1.0.2",
     "vue-router": "^3.4.8",
     "vuetify": "^2.3.14",
     "vuex": "^3.5.1"

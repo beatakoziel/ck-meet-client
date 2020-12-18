@@ -121,7 +121,7 @@
                       </v-card-title>
                       <v-card-subtitle>Konta nie będzie można przywrócić.</v-card-subtitle>
                       <v-card-actions>
-         <DeleteAccountDialog/>
+                        <DeleteAccountDialog/>
                       </v-card-actions>
                     </v-card>
                   </v-tab-item>
@@ -149,12 +149,25 @@ import Personalization from "./Personalization";
 import ImagePicker from "../common/ImagePicker";
 import DeleteAccountDialog from "@/components/people/DeleteAccountDialog";
 import {mapActions} from "vuex";
+import VueNotifications from "vue-notifications";
 
 export default {
   name: "App",
   data: () => ({
-    show:false
+    show: false
   }),
+  notifications: {
+    showSuccessMsg: {
+      type: VueNotifications.types.success,
+      title: 'Sukces',
+      message: 'Dane zostały edytowane!'
+    },
+    showErrorMsg: {
+      type: VueNotifications.types.error,
+      title: 'Błąd',
+      message: 'Wprowadź wszystkie wymagane dane!'
+    }
+  },
   components: {
     PersonalData,
     Personalization,
@@ -164,13 +177,15 @@ export default {
   methods: {
     ...mapActions(["currentUser", "registerPersonalData", "registerPersonalizationData", "uploadImage"]),
     updatePersonalData() {
-      this.registerPersonalData().then(() => {
-        this.status();
+      this.registerPersonalData().then((response) => {
+        if (response.status == '200')
+          this.showSuccessMsg();
+        else this.showErrorMsg();
       });
     },
     updatePersonalizationData() {
-      this.registerPersonalData().then(() => {
-        this.status();
+      this.registerPersonalizationData().then(() => {
+        this.showSuccessMsg();
       });
     }
   },

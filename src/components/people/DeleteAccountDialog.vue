@@ -39,12 +39,20 @@
 </template>
 <script>
 import {mapActions, mapMutations, mapState} from "vuex";
+import VueNotifications from "vue-notifications";
 
 export default {
   data() {
     return {
       dialog: false,
       status: null
+    }
+  },
+  notifications: {
+    showSuccessMsg: {
+      type: VueNotifications.types.success,
+      title: 'Sukces',
+      message: 'Konto zostało zamknięte poprawnie!'
     }
   },
   methods: {
@@ -57,6 +65,7 @@ export default {
               this.logout();
               this.registrationStatus = null;
               this.$router.push({ name: "Auth" });
+              this.showSuccessMsg();
             }
           });
       this.dialog = false;

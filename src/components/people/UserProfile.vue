@@ -41,7 +41,7 @@
         <v-container class="hello-container" ml-0 mr-0 pl-0 pr-0>
           <RevertSayHelloDialog/>
           <SayHelloDialog/>
-          <p class="caption info-caption">
+          <p v-if="areFriends()" class="caption info-caption">
             Jeżeli Ty i ten użytkownik przybijecie sobie piątki wówczas zostanie
             odblokowana możliwość skontaktowania się ze sobą.
           </p>
@@ -124,6 +124,17 @@ export default {
       let found = false;
       for (let i = 0; i < this.relationships.length; i++) {
         if (this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) {
+          found = true;
+          break;
+        }
+      }
+      return found;
+    },
+    areFriends() {
+      let found = false;
+      for (let i = 0; i < this.relationships.length; i++) {
+        if ((this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) &&
+            this.relationships[i].status === 'BOTH_SAID_HELLO') {
           found = true;
           break;
         }
