@@ -41,9 +41,12 @@
         <v-container class="hello-container" ml-0 mr-0 pl-0 pr-0>
           <RevertSayHelloDialog/>
           <SayHelloDialog/>
-          <p v-if="areFriends()" class="caption info-caption">
+          <p v-if="!areFriends()" class="caption info-caption">
             Jeżeli Ty i ten użytkownik przybijecie sobie piątki wówczas zostanie
             odblokowana możliwość skontaktowania się ze sobą.
+          </p>
+          <p v-else class="caption info-caption">
+            Jesteście znajomymi.
           </p>
         </v-container>
       </v-container>
@@ -69,20 +72,32 @@
             <p class="title">Preferowane dane osoby, którą {{ currentViewedUser.nickname }} chce poznać</p>
             <v-flex ml-1 row flex-justify-start flex-align-center>
               <v-flex column flex-justify-start flex-align-center>
-                Płeć:
+                <p>Płeć:</p>
                 <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
                   <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   Kobieta
                 </p>
-                <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
+                <p v-if="currentViewedUser.preferredGenderToMeet.includes('MALE')">
                   <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   Mężczyzna
                 </p>
-                Wiek:
-                <p v-if="currentViewedUser.preferredGenderToMeet.includes('FEMALE')">
+                <p>Wiek:</p>
+                <p>
                   <v-icon large>mdi-checkbox-marked-circle-outline</v-icon>
                   od {{ currentViewedUser.preferredAgeToMeetFrom }} do {{ currentViewedUser.preferredAgeToMeetTo }} lat
                 </p>
+              </v-flex>
+            </v-flex>
+          </v-container>
+        </v-card>
+        <v-card v-if="areFriends()" class="my-6" color="card">
+          <v-container>
+            <p class="title">Dane kontaktowe</p>
+            <v-flex ml-1 row flex-justify-start flex-align-center>
+              <v-flex column flex-justify-start flex-align-center>
+                <p>Email: {{ currentViewedUser.contactData.email }}</p>
+                <p>Numer telefonu: {{ currentViewedUser.contactData.phoneNumber }}</p>
+                <p>Link do profilu na Facebooku: <a>{{ currentViewedUser.contactData.linkToFacebookProfile }}</a></p>
               </v-flex>
             </v-flex>
           </v-container>
@@ -133,6 +148,7 @@ export default {
     areFriends() {
       let found = false;
       for (let i = 0; i < this.relationships.length; i++) {
+        console.log(this.relationships[i]);
         if ((this.relationships[i].userToWhoSaidHello === this.currentViewedUser.id) &&
             this.relationships[i].status === 'BOTH_SAID_HELLO') {
           found = true;
