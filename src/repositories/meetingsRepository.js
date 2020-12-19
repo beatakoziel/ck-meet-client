@@ -24,7 +24,7 @@ export default {
     addComment(id, content) {
         return Client.post(`${resource}/${id}/comment`, content);
     },
-    deleteComment(id, content) {
-        return Client.delete(`${resource}/${id}/comment`, content);
+    deleteComment(meetingId, commentId) {
+        return Client.delete(`${resource}/${meetingId}/comment`, commentId);
     }
 };

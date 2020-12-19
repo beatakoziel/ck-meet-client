@@ -83,6 +83,7 @@
 
 <script>
 import {mapState, mapActions, mapGetters, mapMutations} from "vuex";
+import VueNotifications from "vue-notifications";
 
 export default {
   data() {
@@ -102,6 +103,18 @@ export default {
       dialog: false,
     };
   },
+  notifications: {
+    showSuccessMsg: {
+      type: VueNotifications.types.success,
+      title: 'Sukces',
+      message: 'Spotkanie zostało utworzone!'
+    },
+    showErrorMsg: {
+      type: VueNotifications.types.error,
+      title: 'Wylogowano',
+      message: 'Sesja wygasła!'
+    }
+  },
   components: {},
   mounted() {
     this.getCategories();
@@ -120,7 +133,9 @@ export default {
         console.log(response.status)
         if (response.status == "201") {
           this.dialog = false;
+          this.showSuccessMsg();
         } else if (response.status === "403") {
+          this.showErrorMsg();
           this.logout();
           this.resetState();
           this.$router.push({name: "Auth"});

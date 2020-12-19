@@ -31,6 +31,18 @@ const actions = {
             return response;
         })
     },
+    addComment({commit}, {meetingId, content}) {
+        return MeetingsRepository.addComment(meetingId, content).then(response => {
+            commit('setComments', response.data);
+            return response;
+        })
+    },
+    deleteComment({commit}, {meetingId, commentId}) {
+        return MeetingsRepository.deleteComment(meetingId, commentId).then(response => {
+            commit('setComments', response.data);
+            return response;
+        })
+    },
     deleteMeeting({dispatch}, meetingId) {
         return MeetingsRepository.delete(meetingId).then(response => {
             dispatch('getMeetings');
@@ -57,6 +69,9 @@ const actions = {
 const mutations = {
     setMeetings(state, meetings) {
         state.meetings = meetings
+    },
+    setComments(state, comments) {
+        state.currentMeeting.comments = comments;
     },
     setCurrentViewedMeeting(state, meeting) {
         state.currentMeeting = meeting;

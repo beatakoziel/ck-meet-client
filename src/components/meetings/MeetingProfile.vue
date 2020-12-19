@@ -59,44 +59,25 @@
           <CancelParticipationDialog/>
         </v-container>
         <v-container v-if="isAfterMeeting">
-          <p><v-icon color="error" large>mdi-information-outline</v-icon></p> Przykro nam, ale to wydarzenie już się odbyło.
+          <p>
+            <v-icon color="error" large>mdi-information-outline</v-icon>
+          </p>
+          Przykro nam, ale to wydarzenie już się odbyło.
         </v-container>
         <v-container v-else-if="willExceedMaxNumOfParticipants">
-          <p><v-icon color="error" large>mdi-information-outline</v-icon></p> Przykro nam, ale to wydarzenie ma już maksymalną liczbę uczestników.
+          <p>
+            <v-icon color="error" large>mdi-information-outline</v-icon>
+          </p>
+          Przykro nam, ale to wydarzenie ma już maksymalną liczbę uczestników.
         </v-container>
         <v-container v-else>
-          <p><v-icon color="accent" large>mdi-information-outline</v-icon></p> Aby móc wziąć udział w wydarzeniu musisz mieć inicjatora spotkania w znajomych. Wejdź w profil gospodarza i kliknij 'Przywitaj się!'.
+          <p>
+            <v-icon color="accent" large>mdi-information-outline</v-icon>
+          </p>
+          Aby móc wziąć udział w wydarzeniu musisz mieć inicjatora spotkania w znajomych. Wejdź w profil gospodarza i
+          kliknij 'Przywitaj się!'.
         </v-container>
-
-      </v-card>
-      <v-container ml-2 mr-2 color="primary" class="meeting-card">
-        <v-card-title>Dyskusja</v-card-title>
-        <!--            v-model="personalData.description"-->
-        <v-textarea
-            label="Komentarz"
-            :counter="500"
-            prepend-icon="mdi-comment-outline"
-            :rules="[(v) => !!v || 'Pole wymagane']"
-            required>
-        </v-textarea>
-        <v-card-actions>
-          <v-btn outlined color="primary"> Dodaj</v-btn>
-        </v-card-actions>
-        <v-container v-if="!currentMeeting.comments.length">
-          <v-icon color="primary" large>mdi-information-outline</v-icon>
-          Brak komentarzy
-        </v-container>
-      </v-container>
-      <v-card color="primary" class="mr-16 meeting-card">
-        <v-container v-if="currentMeeting.host.id===currentLoggedUser.id" ml-6>
-          <v-flex mt-5 mb-5 row justify-center>
-            <EditMeetingDialog :current-meeting="currentMeeting"/>
-            <DeleteMeetingDialog class="ml-3" :meeting-id="currentMeeting.id" :meeting-name="currentMeeting.name"/>
-          </v-flex>
-          <hr/>
-          <v-spacer></v-spacer>
-        </v-container>
-        <v-container ml-8>
+        <div v-if="isParticipant()">
           <p class="title">Organizator wydarzenia</p>
           <div>
             <v-img
@@ -120,7 +101,108 @@
           </p>
           <p class="title">Uczestnicy wydarzenia</p>
           <v-container v-if="!currentMeeting.participants.length">
-            <v-icon color="primary" large>mdi-information-outline</v-icon>
+            <v-icon large>mdi-information-outline</v-icon>
+            Brak
+          </v-container>
+          <v-container v-else v-for="participant in participantsList" :key="participant.id">
+            <v-img
+                v-if="participant.avatarBytes == null"
+                height="50px"
+                width="50px"
+                src="../../assets/default-image.png"
+            />
+            <v-img
+                v-else
+                height="50px"
+                width="50px"
+                :src="'data:image/jpeg;base64,' + participant.avatarBytes"
+            />
+            {{ participant.nickname }}, {{ participant.ageWithString }}
+          </v-container>
+        </div>
+      </v-card>
+      <v-container v-if="isParticipant()" color="primary" class=" ml-16 meeting-card">
+        <v-card-title>Dyskusja</v-card-title>
+        <!--            v-model="personalData.description"-->
+        <v-textarea
+            label="Komentarz"
+            :counter="500"
+            v-model="content"
+            prepend-icon="mdi-comment-outline">
+        </v-textarea>
+        <v-card-actions>
+          <v-flex row justify-end>
+            <v-btn outlined color="primary" @click="addNewComment()"> Dodaj</v-btn>
+          </v-flex>
+        </v-card-actions>
+        <v-container v-if="!currentMeeting.comments.length">
+          <v-icon color="primary" large>mdi-information-outline</v-icon>
+          Brak komentarzy
+        </v-container>
+        <v-container fluid v-else>
+          <v-card class="mb-3" color="card" v-for="comment in currentMeeting.comments" :key="comment.id">
+            <v-row>
+              <v-avatar class="ml-5 mt-3">
+                <img
+                    src="https://cdn.vuetifyjs.com/images/john.jpg"
+                    alt="John"
+                >
+              </v-avatar>
+              <p class="ml-5 mt-5" style=""><b>{{ comment.commentator.nickname }}</b></p>
+              <v-card-actions class="ml-8">
+                <v-flex row justify-end>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-btn @click="deleteThisComment()" icon>
+                        <v-icon outlined color="error" v-bind="attrs" v-on="on">mdi-delete-outline</v-icon>
+                      </v-btn>
+                    </template>
+                    Usuń komentarz
+                  </v-tooltip>
+                </v-flex>
+
+              </v-card-actions>
+            </v-row>
+            <v-card class="mx-5 my-5">
+              <p class="ml-3 mr-3">{{ comment.content }}</p>
+            </v-card>
+          </v-card>
+        </v-container>
+      </v-container>
+      <v-card color="primary" class=" ml-16 mr-16 ">
+        <v-container v-if="currentMeeting.host.id===currentLoggedUser.id" ml-6>
+          <v-flex mt-5 mb-5 row justify-center>
+            <EditMeetingDialog :current-meeting="currentMeeting"/>
+            <DeleteMeetingDialog class="ml-3" :meeting-id="currentMeeting.id" :meeting-name="currentMeeting.name"/>
+          </v-flex>
+          <hr/>
+          <v-spacer></v-spacer>
+        </v-container>
+        <v-container v-if="!isParticipant()" ml-8>
+          <p class="title">Organizator wydarzenia</p>
+          <div>
+            <v-img
+                v-if="currentMeeting.host.avatarBytes == null"
+                height="150px"
+                width="150px"
+                src="../../assets/default-image.png"
+            />
+            <v-img
+                v-else
+                height="150px"
+                width="150px"
+                :src="'data:image/jpeg;base64,' + currentMeeting.host.avatarBytes"
+            />
+          </div>
+          <p v-if="currentMeeting.host.id===currentLoggedUser.id" style="font-size: 20px">
+            Ty
+          </p>
+          <p v-else style="font-size: 20px">
+            {{ currentMeeting.host.nickname }}
+          </p>
+          <p class="title">Uczestnicy wydarzenia</p>
+          <v-container v-if="!currentMeeting.participants.length">
+            <v-icon large>mdi-information-outline</v-icon>
             Brak
           </v-container>
           <v-container v-else v-for="participant in participantsList" :key="participant.id">
@@ -145,7 +227,7 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import {mapState, mapActions} from "vuex";
 import EditMeetingDialog from "@/components/meetings/EditMeetingDialog";
 import DeleteMeetingDialog from "@/components/meetings/DeleteMeetingDialog";
 import ParticipateDialog from "@/components/meetings/ParticipateDialog";
@@ -153,6 +235,7 @@ import CancelParticipationDialog from "@/components/meetings/CancelParticipation
 
 export default {
   data: () => ({
+    content: "",
     ageString: "",
     participantsList: [],
     participantData: {
@@ -164,6 +247,7 @@ export default {
     }
   }),
   methods: {
+    ...mapActions(['addComment', 'deleteComment']),
     getImgUrl() {
       return require('../../assets/categories/' + this.currentMeeting.category.key + '.jpg');
     },
@@ -185,7 +269,27 @@ export default {
         }
         this.participantsList.push(obj);
       });
-    }
+    },
+    isParticipant() {
+      let found = false;
+      for (let i = 0; i < this.participantsList.length; i++) {
+        if ((this.participantsList[i].id === this.currentLoggedUser.id)) {
+          found = true;
+          break;
+        }
+      }
+      return found;
+    },
+    addNewComment() {
+      this.addComment({meetingId: this.currentMeeting.id, content: this.content}).then(() => {
+        this.content = "";
+      });
+    },
+    deleteThisComment() {
+      this.deleteComment({meetingId: this.currentMeeting.id, commentId: 1}).then(() => {
+        console.log("UDAO")
+      });
+    },
   },
   components: {
     EditMeetingDialog,
@@ -257,7 +361,7 @@ a {
 }
 
 .meeting-card {
-  max-width: 600px;
+  width: 600px;
   padding-left: 40px;
   padding-right: 40px;
 }
@@ -268,5 +372,9 @@ span {
 
 .description-title {
   margin-top: 15px;
+}
+
+comment {
+  margin-left: 10px;
 }
 </style>
