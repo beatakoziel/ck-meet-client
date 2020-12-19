@@ -1,4 +1,5 @@
 import Client from './axiosClient';
+
 const resource = '/meetings';
 
 export default {
@@ -9,7 +10,6 @@ export default {
         return Client.post(`${resource}`, meeting);
     },
     update(id, meeting) {
-        console.log(meeting)
         return Client.put(`${resource}/${id}`, meeting);
     },
     delete(id) {
@@ -22,9 +22,12 @@ export default {
         return Client.post(`${resource}/${id}/cancel`);
     },
     addComment(id, content) {
-        return Client.post(`${resource}/${id}/comment`, content);
+        let contentObj = {
+            content: content
+        }
+        return Client.post(`${resource}/${id}/comment`, contentObj);
     },
     deleteComment(meetingId, commentId) {
-        return Client.delete(`${resource}/${meetingId}/comment`, commentId);
+        return Client.delete(`${resource}/${meetingId}/comment/${commentId}`);
     }
 };

@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-flex row justify-center mt-10>
-      <v-card mr-0 color="card" class="ml-16 meeting-card">
+      <v-card mr-0 color="card" class="ml-10 meeting-card">
         <v-img
 
             height="350px"
@@ -121,7 +121,7 @@
           </v-container>
         </div>
       </v-card>
-      <v-container v-if="isParticipant()" color="primary" class=" ml-16 meeting-card">
+      <v-container v-if="isParticipant()" color="primary" class=" ml-16 mr-0 meeting-card">
         <v-card-title>Dyskusja</v-card-title>
         <!--            v-model="personalData.description"-->
         <v-textarea
@@ -140,21 +140,25 @@
           Brak komentarzy
         </v-container>
         <v-container fluid v-else>
-          <v-card class="mb-3" color="card" v-for="comment in currentMeeting.comments" :key="comment.id">
+          <v-card color="card" v-for="comment in currentMeeting.comments" :key="comment.id">
             <v-row>
               <v-avatar class="ml-5 mt-3">
-                <img
-                    src="https://cdn.vuetifyjs.com/images/john.jpg"
-                    alt="John"
-                >
+                <v-img
+                    v-if="comment.commentator.avatarBytes == null"
+                    src="../../assets/default-image.png"
+                />
+                <v-img
+                    v-else
+                    :src="'data:image/jpeg;base64,' + comment.commentator.avatarBytes"
+                />
               </v-avatar>
               <p class="ml-5 mt-5" style=""><b>{{ comment.commentator.nickname }}</b></p>
-              <v-card-actions class="ml-8">
+              <v-card-actions v-if="currentLoggedUser.id == comment.commentator.id" class="ml-8">
                 <v-flex row justify-end>
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
-                      <v-btn @click="deleteThisComment()" icon>
-                        <v-icon outlined color="error" v-bind="attrs" v-on="on">mdi-delete-outline</v-icon>
+                      <v-btn @click="deleteThisComment(comment.id)" icon>
+                        <v-icon outlined color="primary" v-bind="attrs" v-on="on">mdi-delete-outline</v-icon>
                       </v-btn>
                     </template>
                     Usuń komentarz
@@ -163,8 +167,8 @@
 
               </v-card-actions>
             </v-row>
-            <v-card class="mx-5 my-5">
-              <p class="ml-3 mr-3">{{ comment.content }}</p>
+            <v-card class="mx-5">
+              <p class="mx-3 my-3 py-3">{{ comment.content }}</p>
             </v-card>
           </v-card>
         </v-container>
@@ -271,10 +275,10 @@ export default {
       });
     },
     isParticipant() {
-      let found = false;
+      let found = true;
       for (let i = 0; i < this.participantsList.length; i++) {
         if ((this.participantsList[i].id === this.currentLoggedUser.id)) {
-          found = true;
+          found = false;
           break;
         }
       }
@@ -285,8 +289,8 @@ export default {
         this.content = "";
       });
     },
-    deleteThisComment() {
-      this.deleteComment({meetingId: this.currentMeeting.id, commentId: 1}).then(() => {
+    deleteThisComment(commentId) {
+      this.deleteComment({meetingId: this.currentMeeting.id, commentId: commentId}).then(() => {
         console.log("UDAO")
       });
     },

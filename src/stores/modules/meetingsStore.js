@@ -32,6 +32,7 @@ const actions = {
         })
     },
     addComment({commit}, {meetingId, content}) {
+        console.log("content" + content)
         return MeetingsRepository.addComment(meetingId, content).then(response => {
             commit('setComments', response.data);
             return response;
