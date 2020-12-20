@@ -275,10 +275,10 @@ export default {
       });
     },
     isParticipant() {
-      let found = true;
+      let found = false;
       for (let i = 0; i < this.participantsList.length; i++) {
         if ((this.participantsList[i].id === this.currentLoggedUser.id)) {
-          found = false;
+          found = true;
           break;
         }
       }

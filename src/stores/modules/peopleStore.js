@@ -18,6 +18,7 @@ const getDefaultState = () => ({
     },
     personalizationData: {
         interests: [],
+        interestsObjects: [],
         preferredGenderToMeet: [],
         preferredAgeToMeetFrom: 18,
         preferredAgeToMeetTo: 80
@@ -100,11 +101,14 @@ const mutations = {
         state.personalData.phoneNumber = user.contactData.phoneNumber
         state.personalData.linkToFacebookProfile = user.contactData.linkToFacebookProfile
         state.personalData.gender = user.gender
-        state.personalizationData.interests = user.interests
+        state.personalizationData.interestsObjects = user.interests
+        for (let i = 0; i < user.interests.length; i++) {
+            state.personalizationData.interests.push(user.interests[i].key)
+        }
         state.personalizationData.preferredGenderToMeet = user.preferredGenderToMeet
         state.personalizationData.preferredAgeToMeetFrom = user.preferredAgeToMeetFrom
         state.personalizationData.preferredAgeToMeetTo = user.preferredAgeToMeetTo
-        state.image.image = user.avatar==null? null : user.avatar.data
+        state.image.image = user.avatar == null ? null : user.avatar.data
         state.currentLoggedUser = user
     },
     resetState() {
